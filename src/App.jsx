@@ -6,7 +6,7 @@ import WebminarSearch from './components/WebminarSearch';
 
 Modal.setAppElement('#root');
 
-const App = ({ acessToken }) => {
+const App = ({ accessToken }) => {
     const [webminarList, setWebminarList] = useState([]);
     const [servicesList, setServicesList] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
@@ -76,10 +76,10 @@ const App = ({ acessToken }) => {
             <Modal
                 isOpen={isOpen}
                 onRequestClose={closeModal}
-                overlayClassName="fixed inset-0 bg-blue-800 bg-opacity-75 flex justify-center"
+                overlayClassName="fixed inset-0 bg-white bg-opacity-75 flex justify-center"
                 className="relative bg-white overflow-y-auto focus:outline-none p-2 w-full m-1"
             >
-                <WebminarSearch webminarList={webminarList} closeModal={closeModal} />
+                <WebminarSearch webminarList={webminarList} closeModal={closeModal} accessToken={accessToken} />
             </Modal>
         </div>
     );

@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import WebminarDisplay from './WebminarDisplay';
+import { createDetailsWidget } from '@livechat/agent-app-sdk';
 
-const WebminarSearch = ({ webminarList, closeModal }) => {
+const WebminarSearch = ({ webminarList, closeModal, accessToken }) => {
+    const [chatId, setChatId] = useState('');
+
+    useEffect(() =>
+        createDetailsWidget()
+            .then((widget) => {
+                // condition that is emitted when an agent opens a conversation within Chats
+                widget.on('customer_profile', (profile) => {
+                    // sets chat_id
+                    setChatId(profile.chat.chat_id);
+                });
+            })
+            .catch((err) => console.log(err)),
+    );
     return (
         <div>
             <div className="flex justify-end">
@@ -75,7 +89,7 @@ const WebminarSearch = ({ webminarList, closeModal }) => {
                         {webminarList.map((webminar) => (
                             <div key={webminar.id}>
                                 <div>
-                                    <WebminarDisplay webminar={webminar} />
+                                    <WebminarDisplay webminar={webminar} accessToken={accessToken} chatId={chatId} />
                                 </div>
                                 <div className="border bg-gray-500 mt-2 mb-4"></div>
                             </div>
