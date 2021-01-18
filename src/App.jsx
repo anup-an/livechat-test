@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
 import './assets/main.css';
-import WebminarSearch from './components/WebminarSearch';
-import WebminarServices from './components/WebminarServices';
-
+import WebminarSearch from './components/webminars/WebminarSearch';
+import WebminarServices from './components/services/WebminarServices';
+import { sendSelectedWebminars } from './utils/config';
 import { createDetailsWidget } from '@livechat/agent-app-sdk';
 
 Modal.setAppElement('#root');
@@ -59,55 +59,6 @@ const App = ({ accessToken }) => {
             .catch((err) => console.log(err)),
     );
 
-    const sendWebminarList = () => {
-        const payload = {
-            chat_id: chatId,
-            event: {
-                type: 'rich_message',
-                recipients: 'all',
-                template_id: 'cards',
-                elements: webminarList.map((webmin) => ({
-                    title: `${webmin.title}`,
-                    subtitle: `${webmin.price}`,
-                    image: {
-                        size: 123444,
-                        width: 640,
-                        height: 480,
-                        url: 'https://images.pexels.com/photos/34950/pexels-photo.jpg',
-                    },
-                    buttons: [
-                        {
-                            text: 'Join webminar',
-                            postback_id: 'action_yes',
-                            type: 'webview',
-                            value: `${webmin.webinarUrl}`,
-                            webview_height: 'full',
-                            user_ids: [],
-                        },
-                    ],
-                })),
-            },
-        };
-        axios
-            .post(
-                'https://api.livechatinc.com/v3.2/agent/action/send_event',
-
-                payload,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                },
-            )
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-
     useEffect(() => {
         axios
             .get(' https://api-test.meeteo.io/thirdParty/v1/list_webinars?app_id=123456')
@@ -139,7 +90,7 @@ const App = ({ accessToken }) => {
             <div className="flex flex-col space-y-6">
                 <div>
                     <button
-                        onClick={sendWebminarList}
+                        onClick={() => sendSelectedWebminars(webminarList, chatId, accessToken)}
                         type="button"
                         className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
                     >

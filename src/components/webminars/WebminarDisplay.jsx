@@ -1,62 +1,15 @@
-import React from 'react';
-import { formatCurrency } from '../utils/index';
+import React, { useState, useEffect } from 'react';
+import { formatCurrency } from '../../utils/index';
+import { sendSelectedWebminars } from '../../utils/config';
+
 // import * as LiveChat from '@livechat/agent-app-sdk';
 
-import axios from 'axios';
-
 const WebminarDisplay = ({ webminar, accessToken, chatId, selectWebminar, deleteWebminar }) => {
-    const sendWebminar = (webmin) => {
-        const payload = {
-            chat_id: chatId,
-            event: {
-                type: 'rich_message',
-                recipients: 'all',
-                template_id: 'cards',
-                elements: [
-                    {
-                        title: `${webmin.title}`,
-                        subtitle: `${webmin.price}`,
-                        image: {
-                            size: 123444,
-                            width: 640,
-                            height: 480,
-                            url: 'https://images.pexels.com/photos/34950/pexels-photo.jpg',
-                        },
-                        buttons: [
-                            {
-                                text: 'Join webminar',
-                                postback_id: 'action_yes',
-                                type: 'webview',
-                                value: `${webmin.webinarUrl}`,
-                                webview_height: 'full',
-                                user_ids: [],
-                            },
-                        ],
-                    },
-                ],
-            },
-        };
-
-        console.log(payload);
-        axios
-            .post(
-                'https://api.livechatinc.com/v3.2/agent/action/send_event',
-
-                payload,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                },
-            )
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+    const [arr, setArr] = useState([]);
+    const toArray = (webmin) => {
+        setArr(arr.push(webmin));
     };
+
     return (
         <div className="flex justify-between items-center">
             <div className="border-l-2 border-blue-800 p-1 flex flex-row space-x-6 transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105">
@@ -90,7 +43,11 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, selectWebminar, delete
                 </button>
                 <button
                     type="button"
-                    onClick={() => sendWebminar(webminar)}
+                    onClick={() => {
+                        toArray(webminar);
+                        console.log(arr);
+                        sendSelectedWebminars(arr, chatId, accessToken);
+                    }}
                     className="w-6 h-6 hover:bg-blue-800 text-blue-400 hover:text-white border rounded shadow flex items-center justify-center focus:outline-none"
                 >
                     <svg

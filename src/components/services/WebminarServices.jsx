@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { sendSelectedServices } from '../../utils/config';
 
 const WebminarServices = ({ servicesList, closeModal, accessToken, chatId }) => {
     const [selectedServices, setSelectedServices] = useState(servicesList.map((e) => ({ ...e, isSelected: false })));
@@ -126,6 +127,7 @@ const WebminarServices = ({ servicesList, closeModal, accessToken, chatId }) => 
                             : ''}
                     </div>
                     <button
+                        onClick={() => sendSelectedServices(sendServices, chatId, accessToken)}
                         type="button"
                         className="py-1 px-2 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
                     >
