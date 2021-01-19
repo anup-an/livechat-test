@@ -6,6 +6,8 @@ import WebminarSearch from './components/webminars/WebminarSearch';
 import WebminarServices from './components/services/WebminarServices';
 import { sendSelectedWebminars } from './utils/config';
 import { createDetailsWidget } from '@livechat/agent-app-sdk';
+import WebminarContext from './context/webminars';
+import useWebminars from './hooks/useWebminars';
 
 Modal.setAppElement('#root');
 
@@ -86,46 +88,48 @@ const App = ({ accessToken }) => {
     }, []);
 
     return (
-        <div className="border rounded shadow p-10 m-2">
-            <div className="flex flex-col space-y-6">
-                <div>
-                    <button
-                        onClick={() => sendSelectedWebminars(webminarList, chatId, accessToken)}
-                        type="button"
-                        className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
-                    >
-                        Send upcoming webinars
-                    </button>
-                </div>
-                <div>
-                    <button
-                        onClick={openServicesList}
-                        type="button"
-                        className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
-                    >
-                        Open services list
-                    </button>
-                </div>
+        <WebminarContext.Provider value={useWebminars()}>
+            <div className="border rounded shadow p-10 m-2">
+                <div className="flex flex-col space-y-6">
+                    <div>
+                        <button
+                            onClick={() => sendSelectedWebminars(webminarList, chatId, accessToken)}
+                            type="button"
+                            className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
+                        >
+                            Send upcoming webinars
+                        </button>
+                    </div>
+                    <div>
+                        <button
+                            onClick={openServicesList}
+                            type="button"
+                            className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
+                        >
+                            Open services list
+                        </button>
+                    </div>
 
-                <div>
-                    <button
-                        onClick={openWebminarList}
-                        type="button"
-                        className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
-                    >
-                        Search webminars
-                    </button>
+                    <div>
+                        <button
+                            onClick={openWebminarList}
+                            type="button"
+                            className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
+                        >
+                            Search webminars
+                        </button>
+                    </div>
                 </div>
+                <Modal
+                    isOpen={isOpen}
+                    onRequestClose={closeModal}
+                    overlayClassName="fixed inset-0 bg-white bg-opacity-75 flex justify-center"
+                    className="relative bg-white overflow-y-auto focus:outline-none p-2 w-full m-1"
+                >
+                    {modalContent}
+                </Modal>
             </div>
-            <Modal
-                isOpen={isOpen}
-                onRequestClose={closeModal}
-                overlayClassName="fixed inset-0 bg-white bg-opacity-75 flex justify-center"
-                className="relative bg-white overflow-y-auto focus:outline-none p-2 w-full m-1"
-            >
-                {modalContent}
-            </Modal>
-        </div>
+        </WebminarContext.Provider>
     );
 };
 
