@@ -1,7 +1,6 @@
 import React from 'react';
-import { Zoom } from 'react-awesome-reveal';
 
-const WebminarToSend = ({ webminar, deleteWebminar }) => {
+const WebminarToSend = ({ webminar, deleteWebminar, window }) => {
     return (
         <div className=" transition duration-500 ease-in-out transform hover:translate-y-0 hover:scale-105">
             <button onClick={() => deleteWebminar(webminar.id)} type="button">
@@ -23,7 +22,18 @@ const WebminarToSend = ({ webminar, deleteWebminar }) => {
                 </div>
             </button>
             <div className={` p-4 w-14 h-14 border rounded shadow focus:outline-none flex items-center justify-center`}>
-                <div className="text-xs text-center">{new Date(webminar.startDate).toString().slice(4, 10)}</div>
+                {window === 'webminars' ? (
+                    <div className="flex flex-col content-center justify-center">
+                        <div>{new Date(webminar.startDate).toString().slice(4, 7)}</div>
+                        <div className="text-xs text-center">
+                            {new Date(webminar.startDate).toString().slice(8, 10)}
+                        </div>
+                    </div>
+                ) : (
+                    ''
+                )}
+
+                {window === 'services' ? <div className="text-xs text-center">{webminar.name}</div> : ''}
             </div>
         </div>
     );

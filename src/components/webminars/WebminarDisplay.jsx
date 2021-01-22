@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { formatCurrency } from '../../utils/index';
 import { sendSelectedWebminars } from '../../utils/config';
 
 // import * as LiveChat from '@livechat/agent-app-sdk';
 
-const WebminarDisplay = ({ webminar, accessToken, chatId, selectWebminar, deleteWebminar }) => {
+const WebminarDisplay = ({ webminar, accessToken, chatId, selectWebminar, window }) => {
     const [arr, setArr] = useState([]);
     const toArray = (webmin) => {
         setArr(arr.push(webmin));
@@ -12,16 +12,49 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, selectWebminar, delete
 
     return (
         <div className="flex justify-between items-center">
-            <div className="border-l-2 border-blue-800 p-1 flex flex-row space-x-6 transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105">
+            <div className="border-l-2 border-blue-800 p-1 flex flex-row  justify-between space-x-10 transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105">
                 <div className="mx-2">
-                    <div>{new Date(webminar.startDate).toString().slice(4, 10)}</div>
+                    {window === 'services' ? <div>{webminar.name}</div> : ''}
+                    {window === 'webminars' ? (
+                        <div>
+                            <div className="text-lg">{new Date(webminar.startDate).toString().slice(4, 7)}</div>
+                            <div className="content-center text-center">
+                                {new Date(webminar.startDate).toString().slice(8, 10)}
+                            </div>
+                        </div>
+                    ) : (
+                        ''
+                    )}
                 </div>
                 <div>
-                    <div>{webminar.title}</div>
-                    {Number(webminar.price) === 0 ? (
-                        <div className="text-sm text-blue-400">Free</div>
+                    {window === 'services' ? (
+                        <div className="overflow-ellipsis overflow-hidden">{webminar.description}</div>
                     ) : (
-                        <div className="text-sm text-blue-400">{formatCurrency(Number(webminar.price))}</div>
+                        ''
+                    )}
+                    {window === 'webminars' ? (
+                        <div className="overflow-ellipsis overflow-hidden">{webminar.title}</div>
+                    ) : (
+                        ''
+                    )}
+
+                    {window === 'webminars' ? (
+                        Number(webminar.price) === 0 ? (
+                            <div className="text-sm text-blue-400">Free</div>
+                        ) : (
+                            <div className="text-sm text-blue-400">{formatCurrency(Number(webminar.price))}</div>
+                        )
+                    ) : (
+                        ''
+                    )}
+                    {window === 'services' ? (
+                        Number(webminar.onlinePrice) === 0 ? (
+                            <div className="text-sm text-blue-400">Free</div>
+                        ) : (
+                            <div className="text-sm text-blue-400">{formatCurrency(Number(webminar.onlinePrice))}</div>
+                        )
+                    ) : (
+                        ''
                     )}
                 </div>
             </div>
@@ -45,7 +78,6 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, selectWebminar, delete
                     type="button"
                     onClick={() => {
                         toArray(webminar);
-                        console.log(arr);
                         sendSelectedWebminars(arr, chatId, accessToken);
                     }}
                     className="w-6 h-6 hover:bg-blue-800 text-blue-400 hover:text-white border rounded shadow flex items-center justify-center focus:outline-none"

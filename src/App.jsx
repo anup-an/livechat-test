@@ -17,39 +17,25 @@ const App = ({ accessToken }) => {
     const [chatId, setChatId] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [modalContent, setModalContent] = useState();
+    const [window, setWindow] = useState('');
 
     const openModal = () => {
         setIsOpen(true);
     };
     const closeModal = () => {
         setIsOpen(false);
+        setWindow('');
     };
 
-    const openWebminarList = () => {
+    const openList = (list) => {
         openModal();
+        setWindow(list);
         setModalContent(
-            <WebminarSearch
-                webminarList={webminarList}
-                closeModal={closeModal}
-                accessToken={accessToken}
-                chatId={chatId}
-            />,
+            <WebminarSearch closeModal={closeModal} accessToken={accessToken} chatId={chatId} window={list} />,
         );
     };
 
-    const openServicesList = () => {
-        openModal();
-        setModalContent(
-            <WebminarServices
-                servicesList={servicesList}
-                closeModal={closeModal}
-                accessToken={accessToken}
-                chatId={chatId}
-            />,
-        );
-    };
-
-    useEffect(() =>
+    useEffect(() => {
         createDetailsWidget()
             .then((widget) => {
                 // condition that is emitted when an agent opens a conversation within Chats
@@ -58,16 +44,20 @@ const App = ({ accessToken }) => {
                     setChatId(profile.chat.chat_id);
                 });
             })
-            .catch((err) => console.log(err)),
-    );
+            .catch((err) => console.log(err));
+    }, []);
 
     useEffect(() => {
         axios
             .get(' https://api-test.meeteo.io/thirdParty/v1/list_webinars?app_id=123456')
             .then((response) => {
-                console.log(response.data.data.data);
                 setWebminarList(response.data.data.data);
-                localStorage.setItem('webminarList', JSON.stringify(response.data.data.data));
+                localStorage.setItem(
+                    'webminarList',
+                    JSON.stringify(
+                        response.data.data.data.map((e) => ({ ...e, isSelected: false, isDisplayed: true })),
+                    ),
+                );
             })
             .catch((err) => {
                 return err.response;
@@ -78,9 +68,13 @@ const App = ({ accessToken }) => {
         axios
             .get('https://api-test.meeteo.io/thirdParty/v1/list_services?app_id=123456')
             .then((response) => {
-                console.log(response.data.data.data);
                 setServicesList(response.data.data.data);
-                localStorage.setItem('servicesList', JSON.stringify(response.data.data.data));
+                localStorage.setItem(
+                    'servicesList',
+                    JSON.stringify(
+                        response.data.data.data.map((e) => ({ ...e, isSelected: false, isDisplayed: true })),
+                    ),
+                );
             })
             .catch((err) => {
                 return err.response;
@@ -88,38 +82,38 @@ const App = ({ accessToken }) => {
     }, []);
 
     return (
-        <WebminarContext.Provider value={useWebminars()}>
-            <div className="border rounded shadow p-10 m-2">
-                <div className="flex flex-col space-y-6">
-                    <div>
-                        <button
-                            onClick={() => sendSelectedWebminars(webminarList, chatId, accessToken)}
-                            type="button"
-                            className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
-                        >
-                            Send upcoming webinars
-                        </button>
-                    </div>
-                    <div>
-                        <button
-                            onClick={openServicesList}
-                            type="button"
-                            className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
-                        >
-                            Open services list
-                        </button>
-                    </div>
-
-                    <div>
-                        <button
-                            onClick={openWebminarList}
-                            type="button"
-                            className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
-                        >
-                            Search webminars
-                        </button>
-                    </div>
+        <div className="border rounded shadow p-10 m-2">
+            <div className="flex flex-col space-y-6">
+                <div>
+                    <button
+                        onClick={() => sendSelectedWebminars(webminarList, chatId, accessToken)}
+                        type="button"
+                        className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
+                    >
+                        Send upcoming webinars
+                    </button>
                 </div>
+                <div>
+                    <button
+                        onClick={() => openList('services')}
+                        type="button"
+                        className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
+                    >
+                        Open services list
+                    </button>
+                </div>
+
+                <div>
+                    <button
+                        onClick={() => openList('webminars')}
+                        type="button"
+                        className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
+                    >
+                        Search webminars
+                    </button>
+                </div>
+            </div>
+            <WebminarContext.Provider value={useWebminars(window)}>
                 <Modal
                     isOpen={isOpen}
                     onRequestClose={closeModal}
@@ -128,8 +122,8 @@ const App = ({ accessToken }) => {
                 >
                     {modalContent}
                 </Modal>
-            </div>
-        </WebminarContext.Provider>
+            </WebminarContext.Provider>
+        </div>
     );
 };
 

@@ -5,7 +5,7 @@ import { sendSelectedWebminars } from '../../utils/config';
 import WebminarToSend from './WebminarsToSend';
 import WebminarContext from '../../context/webminars';
 
-const WebminarSearch = ({ closeModal, accessToken, chatId }) => {
+const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
     const {
         selectedWebminars,
         sendWebminars,
@@ -42,7 +42,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId }) => {
                         </button>
                     </div>
                     <div className="text-left mx-10 flex flex-row justify-between">
-                        <div>Webminars</div>
+                        <div>{window.charAt(0).toUpperCase() + window.slice(1)}</div>
                         <div>
                             <button
                                 type="button"
@@ -92,7 +92,9 @@ const WebminarSearch = ({ closeModal, accessToken, chatId }) => {
                                     id="search"
                                     name="search"
                                     ref={searchInput}
-                                    placeholder="Search webminars"
+                                    placeholder={`${window === 'services' ? 'Search services' : ''}${
+                                        window === 'webminars' ? 'Search webminars' : ''
+                                    }`}
                                 ></input>
                             </label>
                         </form>
@@ -112,6 +114,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId }) => {
                                         accessToken={accessToken}
                                         chatId={chatId}
                                         selectWebminar={selectWebminar}
+                                        window={window}
                                     />
                                 </div>
                                 <div className="border bg-gray-500 mt-2 mb-4"></div>
@@ -143,7 +146,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId }) => {
                 <div className="grid grid-cols-4 sm:grid-cols-5 pb-2 gap-x-4 mb-4">
                     {displaySelected
                         ? displaySelected.map((webminar) => (
-                              <WebminarToSend deleteWebminar={deleteWebminar} webminar={webminar} />
+                              <WebminarToSend deleteWebminar={deleteWebminar} webminar={webminar} window={window} />
                           ))
                         : ''}
                 </div>

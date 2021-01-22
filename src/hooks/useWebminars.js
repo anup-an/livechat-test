@@ -7,34 +7,54 @@ const getAllWebminars = () => {
     return JSON.parse(list);
 };
 
-const useWebminars = () => {
-    const [selectedWebminars, setSelectedWebminars] = useState(
-        getAllWebminars().map((e) => ({ ...e, isSelected: false, isDisplayed: true })),
-    );
+const getAllServices = () => {
+    const list = localStorage.getItem('servicesList');
+    return JSON.parse(list);
+};
+
+const useWebminars = (window) => {
+    const [selectedWebminars, setSelectedWebminars] = useState([]);
     const [sendWebminars, setSendWebminars] = useState([]);
+
+    useEffect(() => {
+        if (window === 'webminars') {
+            setSelectedWebminars(getAllWebminars());
+            setSendWebminars(getAllWebminars().filter((e) => e.isSelected === true));
+        } else if (window === 'services') {
+            setSelectedWebminars(getAllServices());
+            setSendWebminars(getAllServices().filter((e) => e.isSelected === true));
+        }
+    }, [window]);
+
     const [displaySelected, setDisplaySelected] = useState([]);
     const searchInput = useRef(null);
     const [keyWords, setKeyWords] = useState('');
 
     // select webminar
     const selectWebminar = (webminar, webminarId) => {
-        const foundService = selectedWebminars.find((e) => e.id === webminarId && e.isSelected === true);
-        if (foundService) {
-            setSelectedWebminars([...selectedWebminars]);
-            setSendWebminars([...sendWebminars]);
-        } else if (!foundService) {
+        const foundWebminar = selectedWebminars.find((e) => e.id === webminarId && e.isSelected === true);
+        if (!foundWebminar) {
             const x = selectedWebminars.map((e) => (e.id === webminarId ? { ...e, isSelected: true } : { ...e }));
             setSelectedWebminars(x);
             setSendWebminars([...sendWebminars, webminar]);
+            if (window === 'webminars') {
+                localStorage.setItem('webminarList', JSON.stringify(x));
+            } else if (window === 'services') {
+                localStorage.setItem('servicesList', JSON.stringify(x));
+            }
         }
     };
 
     // delete webminar
     const deleteWebminar = (webminarId) => {
-        console.log(webminarId);
         const x = selectedWebminars.map((e) => (e.id === webminarId ? { ...e, isSelected: false } : { ...e }));
         setSelectedWebminars(x);
         setSendWebminars([...sendWebminars.filter((webminar) => webminar.id !== webminarId)]);
+        if (window === 'webminars') {
+            localStorage.setItem('webminarList', JSON.stringify(x));
+        } else if (window === 'services') {
+            localStorage.setItem('servicesList', JSON.stringify(x));
+        }
     };
 
     useEffect(() => {
@@ -71,7 +91,7 @@ const useWebminars = () => {
 
     useEffect(() => {
         axios
-            .get(`https://api-test.meeteo.io/thirdParty/v1/list_webinars?app_id=123456&search=${keyWords}`)
+            .get(`https://api-test.meeteo.io/thirdParty/v1/list_${window}?app_id=123456&search=${keyWords}`)
             .then((response) => {
                 console.log(response);
                 const ids = response.data.data.data.map((e) => e.id);

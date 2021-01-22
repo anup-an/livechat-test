@@ -11,7 +11,49 @@ export const config = {
     },
 };
 
-export const sendSelectedWebminars = (webminars, chatId, accessToken) => {
+export const sendSelectedWebminars = (webminars, chatId, accessToken, window) => {
+    let elementsArr;
+    window === 'webminars'
+        ? (elementsArr = webminars.map((webminar) => ({
+              title: `${webminar.title}`,
+              subtitle: `${formatCurrency(Number(webminar.price))}`,
+              image: {
+                  size: 123444,
+                  width: 640,
+                  height: 480,
+                  url: 'https://images.pexels.com/photos/34950/pexels-photo.jpg',
+              },
+              buttons: [
+                  {
+                      text: 'Join webminar',
+                      postback_id: 'action_yes',
+                      type: 'webview',
+                      value: `${webminar.company.domain}/webminar-detail/${webminar.slug}`,
+                      webview_height: 'full',
+                      user_ids: [],
+                  },
+              ],
+          })))
+        : webminars.map((webminar) => ({
+              title: `${webminar.title}`,
+              subtitle: `${formatCurrency(Number(webminar.price))}`,
+              image: {
+                  size: 123444,
+                  width: 640,
+                  height: 480,
+                  url: 'https://images.pexels.com/photos/34950/pexels-photo.jpg',
+              },
+              buttons: [
+                  {
+                      text: 'Join service',
+                      postback_id: 'action_yes',
+                      type: 'webview',
+                      value: `https://test-company.test.meeteo.io/service/${webminar.slug}`,
+                      webview_height: 'full',
+                      user_ids: [],
+                  },
+              ],
+          }));
     const payload = {
         chat_id: chatId,
         event: {
