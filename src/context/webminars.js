@@ -11,6 +11,9 @@ const initialState = {
     searchWebminars: () => {},
     slideLeft: () => {},
     slideRight: () => {},
+    sortByPrice: (sort) => {},
+    sortByTitle: (sort) => {},
+    sortByDate: (sort) => {},
 };
 
 const WebminarContext = createContext(initialState);

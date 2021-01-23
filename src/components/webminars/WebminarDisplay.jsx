@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { formatCurrency } from '../../utils/index';
 import { sendSelectedWebminars } from '../../utils/config';
+import WebminarContext from '../../context/webminars';
 
 // import * as LiveChat from '@livechat/agent-app-sdk';
 
-const WebminarDisplay = ({ webminar, accessToken, chatId, selectWebminar, window }) => {
+const WebminarDisplay = ({ webminar, accessToken, chatId, window }) => {
+    const { selectWebminar } = useContext(WebminarContext);
+
     const [arr, setArr] = useState([]);
     const toArray = (webmin) => {
         setArr(arr.push(webmin));

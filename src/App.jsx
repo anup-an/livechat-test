@@ -3,7 +3,6 @@ import Modal from 'react-modal';
 import axios from 'axios';
 import './assets/main.css';
 import WebminarSearch from './components/webminars/WebminarSearch';
-import WebminarServices from './components/services/WebminarServices';
 import { sendSelectedWebminars } from './utils/config';
 import { createDetailsWidget } from '@livechat/agent-app-sdk';
 import WebminarContext from './context/webminars';

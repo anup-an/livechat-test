@@ -23,6 +23,7 @@ const useWebminars = (window) => {
         } else if (window === 'services') {
             setSelectedWebminars(getAllServices());
             setSendWebminars(getAllServices().filter((e) => e.isSelected === true));
+            console.log(selectedWebminars);
         }
     }, [window]);
 
@@ -84,6 +85,92 @@ const useWebminars = (window) => {
         }
     };
 
+    const sortByPrice = (sort) => {
+        if (sort === 'low') {
+            if (window === 'webminars') {
+                const sortWebminars = selectedWebminars.sort((a, b) => (a.price > b.price ? 1 : -1));
+                console.log(sortWebminars.map((e) => e.price));
+                localStorage.setItem('webminarList', JSON.stringify(sortWebminars));
+
+                setSelectedWebminars(sortWebminars);
+            } else if (window === 'services') {
+                const sortWebminars = selectedWebminars.sort((a, b) => (a.onlinePrice > b.onlinePrice ? 1 : -1));
+                console.log(sortWebminars.map((e) => e.onlinePrice));
+                localStorage.setItem('servicesList', JSON.stringify(sortWebminars));
+
+                setSelectedWebminars(sortWebminars);
+            }
+        } else if (sort === 'high') {
+            if (window === 'webminars') {
+                const sortWebminars = selectedWebminars.sort((a, b) => (a.price < b.price ? 1 : -1));
+                console.log(sortWebminars.map((e) => e.price));
+                localStorage.setItem('webminarList', JSON.stringify(sortWebminars));
+
+                setSelectedWebminars(sortWebminars);
+            } else if (window === 'services') {
+                const sortWebminars = selectedWebminars.sort((a, b) => (a.onlinePrice < b.onlinePrice ? 1 : -1));
+                console.log(sortWebminars.map((e) => e.onlinePrice));
+                localStorage.setItem('servicesList', JSON.stringify(sortWebminars));
+
+                setSelectedWebminars(sortWebminars);
+            }
+        }
+    };
+
+    const sortByDate = (sort) => {
+        if (sort === 'oldest') {
+            const sortWebminars = selectedWebminars.sort((a, b) =>
+                a.startDate.replace(/[^\d]/g, '') > b.startDate.replace(/[^\d]/g, '') ? 1 : -1,
+            );
+            console.log(sortWebminars.map((e) => e.startDate));
+            setSelectedWebminars(sortWebminars);
+            localStorage.setItem('webminarList', JSON.stringify(sortWebminars));
+        } else if (sort === 'latest') {
+            const sortWebminars = selectedWebminars.sort((a, b) =>
+                a.startDate.replace(/[^\d]/g, '') < b.startDate.replace(/[^\d]/g, '') ? 1 : -1,
+            );
+            console.log(sortWebminars.map((e) => e.startDate));
+            setSelectedWebminars(sortWebminars);
+            localStorage.setItem('webminarList', JSON.stringify(sortWebminars));
+        }
+    };
+
+    const sortByTitle = (sort) => {
+        if (sort === 'atoz') {
+            if (window === 'webminars') {
+                const sortWebminars = selectedWebminars.sort((a, b) =>
+                    a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1,
+                );
+                console.log(sortWebminars.map((e) => e.title));
+                setSelectedWebminars(sortWebminars);
+                localStorage.setItem('webminarList', JSON.stringify(sortWebminars));
+            } else if (window === 'services') {
+                const sortWebminars = selectedWebminars.sort((a, b) =>
+                    a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1,
+                );
+                console.log(sortWebminars.map((e) => e.name));
+                setSelectedWebminars(sortWebminars);
+                localStorage.setItem('servicesList', JSON.stringify(sortWebminars));
+            }
+        } else if (sort === 'ztoa') {
+            if (window === 'webminars') {
+                const sortWebminars = selectedWebminars.sort((a, b) =>
+                    a.title.toLowerCase() < b.title.toLowerCase() ? 1 : -1,
+                );
+                console.log(sortWebminars.map((e) => e.title));
+                setSelectedWebminars(sortWebminars);
+                localStorage.setItem('webminarList', JSON.stringify(sortWebminars));
+            } else if (window === 'services') {
+                const sortWebminars = selectedWebminars.sort((a, b) =>
+                    a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1,
+                );
+                console.log(sortWebminars.map((e) => e.name));
+                setSelectedWebminars(sortWebminars);
+                localStorage.setItem('servicesList', JSON.stringify(sortWebminars));
+            }
+        }
+    };
+
     const searchWebminars = (event) => {
         event.preventDefault();
         setKeyWords(searchInput.current.value);
@@ -116,6 +203,9 @@ const useWebminars = (window) => {
         searchWebminars,
         slideLeft,
         slideRight,
+        sortByPrice,
+        sortByTitle,
+        sortByDate,
     };
 };
 
