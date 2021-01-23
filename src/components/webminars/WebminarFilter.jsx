@@ -21,7 +21,6 @@ const WebminarFilter = ({ window }) => {
                 : setDisplay({ ...display, title: true, price: false, date: false });
         }
     };
-    console.log(display);
 
     return (
         <div className="flex flex-row justify-between space-x-6">
