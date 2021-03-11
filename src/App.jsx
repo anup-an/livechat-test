@@ -48,7 +48,7 @@ const App = ({ accessToken }) => {
 
     useEffect(() => {
         axios
-            .get(' https://api-test.meeteo.io/thirdParty/v1/list_webinars?app_id=123456')
+            .get(' https://api-test.meeteo.io/thirdParty/v1/list_webinars?app_id=678901')
             .then((response) => {
                 setWebminarList(response.data.data.data);
                 localStorage.setItem(
@@ -65,7 +65,7 @@ const App = ({ accessToken }) => {
 
     useEffect(() => {
         axios
-            .get('https://api-test.meeteo.io/thirdParty/v1/list_services?app_id=123456')
+            .get('https://api-test.meeteo.io/thirdParty/v1/list_services?app_id=678901')
             .then((response) => {
                 setServicesList(response.data.data.data);
                 localStorage.setItem(
@@ -104,7 +104,7 @@ const App = ({ accessToken }) => {
 
                 <div>
                     <button
-                        onClick={() => openList('webminars')}
+                        onClick={() => openList('webinars')}
                         type="button"
                         className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
                     >

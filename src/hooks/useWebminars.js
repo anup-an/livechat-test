@@ -17,7 +17,7 @@ const useWebminars = (window) => {
     const [sendWebminars, setSendWebminars] = useState([]);
 
     useEffect(() => {
-        if (window === 'webminars') {
+        if (window === 'webinars') {
             setSelectedWebminars(getAllWebminars());
             setSendWebminars(getAllWebminars().filter((e) => e.isSelected === true));
         } else if (window === 'services') {
@@ -38,7 +38,7 @@ const useWebminars = (window) => {
             const x = selectedWebminars.map((e) => (e.id === webminarId ? { ...e, isSelected: true } : { ...e }));
             setSelectedWebminars(x);
             setSendWebminars([...sendWebminars, webminar]);
-            if (window === 'webminars') {
+            if (window === 'webinars') {
                 localStorage.setItem('webminarList', JSON.stringify(x));
             } else if (window === 'services') {
                 localStorage.setItem('servicesList', JSON.stringify(x));
@@ -51,7 +51,7 @@ const useWebminars = (window) => {
         const x = selectedWebminars.map((e) => (e.id === webminarId ? { ...e, isSelected: false } : { ...e }));
         setSelectedWebminars(x);
         setSendWebminars([...sendWebminars.filter((webminar) => webminar.id !== webminarId)]);
-        if (window === 'webminars') {
+        if (window === 'webinars') {
             localStorage.setItem('webminarList', JSON.stringify(x));
         } else if (window === 'services') {
             localStorage.setItem('servicesList', JSON.stringify(x));
@@ -87,7 +87,7 @@ const useWebminars = (window) => {
 
     const sortByPrice = (sort) => {
         if (sort === 'low') {
-            if (window === 'webminars') {
+            if (window === 'webinars') {
                 const sortWebminars = selectedWebminars.sort((a, b) => (a.price > b.price ? 1 : -1));
                 console.log(sortWebminars.map((e) => e.price));
                 localStorage.setItem('webminarList', JSON.stringify(sortWebminars));
@@ -101,7 +101,7 @@ const useWebminars = (window) => {
                 setSelectedWebminars(sortWebminars);
             }
         } else if (sort === 'high') {
-            if (window === 'webminars') {
+            if (window === 'webinars') {
                 const sortWebminars = selectedWebminars.sort((a, b) => (a.price < b.price ? 1 : -1));
                 console.log(sortWebminars.map((e) => e.price));
                 localStorage.setItem('webminarList', JSON.stringify(sortWebminars));
@@ -137,7 +137,7 @@ const useWebminars = (window) => {
 
     const sortByTitle = (sort) => {
         if (sort === 'atoz') {
-            if (window === 'webminars') {
+            if (window === 'webinars') {
                 const sortWebminars = selectedWebminars.sort((a, b) =>
                     a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1,
                 );
@@ -153,7 +153,7 @@ const useWebminars = (window) => {
                 localStorage.setItem('servicesList', JSON.stringify(sortWebminars));
             }
         } else if (sort === 'ztoa') {
-            if (window === 'webminars') {
+            if (window === 'webinars') {
                 const sortWebminars = selectedWebminars.sort((a, b) =>
                     a.title.toLowerCase() < b.title.toLowerCase() ? 1 : -1,
                 );
@@ -177,8 +177,9 @@ const useWebminars = (window) => {
     };
 
     useEffect(() => {
+        console.log(window);
         axios
-            .get(`https://api-test.meeteo.io/thirdParty/v1/list_${window}?app_id=123456&search=${keyWords}`)
+            .get(`https://api-test.meeteo.io/thirdParty/v1/list_${window}?app_id=678901&search=${keyWords}`)
             .then((response) => {
                 console.log(response);
                 const ids = response.data.data.data.map((e) => e.id);
@@ -187,7 +188,13 @@ const useWebminars = (window) => {
                         ? { ...webminar, isDisplayed: true }
                         : { ...webminar, isDisplayed: false },
                 );
-                setSelectedWebminars(() => displayWebminars);
+                if (window === 'webinars') {
+                    localStorage.setItem('webminarList', JSON.stringify(displayWebminars));
+                    setSelectedWebminars(() => displayWebminars);
+                } else if (window === 'services') {
+                    localStorage.setItem('servicesList', JSON.stringify(displayWebminars));
+                    setSelectedWebminars(() => displayWebminars);
+                }
             })
             .catch((error) => console.log(error));
     }, [keyWords]);

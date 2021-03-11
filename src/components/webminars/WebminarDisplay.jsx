@@ -18,7 +18,7 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, window }) => {
             <div className="border-l-2 border-blue-800 p-1 flex flex-row  justify-between space-x-10 transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105">
                 <div className="mx-2">
                     {window === 'services' ? <div>{webminar.name}</div> : ''}
-                    {window === 'webminars' ? (
+                    {window === 'webinars' ? (
                         <div>
                             <div className="text-lg">{new Date(webminar.startDate).toString().slice(4, 7)}</div>
                             <div className="content-center text-center">
@@ -35,13 +35,13 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, window }) => {
                     ) : (
                         ''
                     )}
-                    {window === 'webminars' ? (
+                    {window === 'webinars' ? (
                         <div className="overflow-ellipsis overflow-hidden">{webminar.title}</div>
                     ) : (
                         ''
                     )}
 
-                    {window === 'webminars' ? (
+                    {window === 'webinars' ? (
                         Number(webminar.price) === 0 ? (
                             <div className="text-sm text-blue-400">Free</div>
                         ) : (

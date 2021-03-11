@@ -63,7 +63,7 @@ const WebminarFilter = ({ window }) => {
                     </button>
                 </div>{' '}
             </div>
-            {window === 'webminars' ? (
+            {window === 'webinars' ? (
                 <div className="flex flex-col w-1/3">
                     <div className="border shadow bg-gray-100 p-1 flex flex-row justify-between items-center w-full">
                         <div>Date:</div>

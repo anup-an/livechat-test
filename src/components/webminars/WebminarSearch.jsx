@@ -79,7 +79,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
                                         name="search"
                                         ref={searchInput}
                                         placeholder={`${window === 'services' ? 'Search services' : ''}${
-                                            window === 'webminars' ? 'Search webminars' : ''
+                                            window === 'webinars' ? 'Search webminars' : ''
                                         }`}
                                     ></input>
                                 </label>
@@ -92,6 +92,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
 
             <main className="p-8 mt-32">
                 <div className="flex flex-col space-y-2 mt-4">
+                    {console.log(selectedWebminars)}
                     {selectedWebminars.map((webminar) =>
                         webminar.isDisplayed === true ? (
                             <div key={webminar.id}>
