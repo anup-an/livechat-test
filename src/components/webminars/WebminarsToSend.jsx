@@ -1,6 +1,10 @@
 import React from 'react';
 
 const WebminarToSend = ({ webminar, deleteWebminar, window }) => {
+    const scrollDiv = () => {
+        let elem = document.getElementById(`${webminar.id}`);
+        elem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'start' });
+    };
     return (
         <div className=" transition duration-500 ease-in-out transform hover:translate-y-0 hover:scale-105">
             <button onClick={() => deleteWebminar(webminar.id)} type="button">
@@ -21,7 +25,11 @@ const WebminarToSend = ({ webminar, deleteWebminar, window }) => {
                     </svg>
                 </div>
             </button>
-            <div className={` p-4 w-14 h-14 border rounded shadow focus:outline-none flex items-center justify-center`}>
+            <div
+                type="button"
+                onMouseEnter={scrollDiv}
+                className={` p-4 w-14 h-14 border rounded shadow focus:outline-none flex items-center justify-center`}
+            >
                 {window === 'webinars' ? (
                     <div className="flex flex-col content-center justify-center">
                         <div>{new Date(webminar.startDate).toString().slice(4, 7)}</div>

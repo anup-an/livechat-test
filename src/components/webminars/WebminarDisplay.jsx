@@ -14,7 +14,7 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, window }) => {
     };
 
     return (
-        <div className="flex justify-between items-center">
+        <div id={`${webminar.id}`} className="flex justify-between items-center">
             <div className="border-l-2 border-blue-800 p-1 flex flex-row  justify-between space-x-10 transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105">
                 <div className="mx-2">
                     {window === 'services' ? <div>{webminar.name}</div> : ''}

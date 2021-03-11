@@ -90,13 +90,12 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
                 <div className="text-center">Search results for '{keyWords}'</div>
             </header>
 
-            <main className="p-8 mt-32">
+            <main className="p-8 mt-32 mb-20">
                 <div className="flex flex-col space-y-2 mt-4">
-                    {console.log(selectedWebminars)}
                     {selectedWebminars.map((webminar) =>
                         webminar.isDisplayed === true ? (
                             <div key={webminar.id}>
-                                <div>
+                                <div className="h-full">
                                     <WebminarDisplay
                                         webminar={webminar}
                                         accessToken={accessToken}

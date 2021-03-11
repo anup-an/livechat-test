@@ -44,6 +44,16 @@ const useWebminars = (window) => {
                 localStorage.setItem('servicesList', JSON.stringify(x));
             }
         }
+        const index1 = selectedWebminars.indexOf(foundWebminar);
+        const webminars = [...selectedWebminars];
+        webminars[index1].isSelected = false;
+        setSelectedWebminars(webminars);
+        setSendWebminars([...sendWebminars].filter((e) => e.id !== webminarId));
+        if (window === 'webinars') {
+            localStorage.setItem('webminarList', JSON.stringify(webminars));
+        } else if (window === 'services') {
+            localStorage.setItem('servicesList', JSON.stringify(webminars));
+        }
     };
 
     // delete webminar
@@ -88,49 +98,49 @@ const useWebminars = (window) => {
     const sortByPrice = (sort) => {
         if (sort === 'low') {
             if (window === 'webinars') {
-                const sortWebminars = selectedWebminars.sort((a, b) => (a.price > b.price ? 1 : -1));
+                const sortWebminars = [...selectedWebminars].sort((a, b) => (a.price > b.price ? 1 : -1));
                 console.log(sortWebminars.map((e) => e.price));
                 localStorage.setItem('webminarList', JSON.stringify(sortWebminars));
 
-                setSelectedWebminars(sortWebminars);
+                setSelectedWebminars(() => sortWebminars);
             } else if (window === 'services') {
-                const sortWebminars = selectedWebminars.sort((a, b) => (a.onlinePrice > b.onlinePrice ? 1 : -1));
+                const sortWebminars = [...selectedWebminars].sort((a, b) => (a.onlinePrice > b.onlinePrice ? 1 : -1));
                 console.log(sortWebminars.map((e) => e.onlinePrice));
                 localStorage.setItem('servicesList', JSON.stringify(sortWebminars));
 
-                setSelectedWebminars(sortWebminars);
+                setSelectedWebminars(() => sortWebminars);
             }
         } else if (sort === 'high') {
             if (window === 'webinars') {
-                const sortWebminars = selectedWebminars.sort((a, b) => (a.price < b.price ? 1 : -1));
+                const sortWebminars = [...selectedWebminars].sort((a, b) => (a.price < b.price ? 1 : -1));
                 console.log(sortWebminars.map((e) => e.price));
                 localStorage.setItem('webminarList', JSON.stringify(sortWebminars));
 
-                setSelectedWebminars(sortWebminars);
+                setSelectedWebminars(() => sortWebminars);
             } else if (window === 'services') {
-                const sortWebminars = selectedWebminars.sort((a, b) => (a.onlinePrice < b.onlinePrice ? 1 : -1));
+                const sortWebminars = [...selectedWebminars].sort((a, b) => (a.onlinePrice < b.onlinePrice ? 1 : -1));
                 console.log(sortWebminars.map((e) => e.onlinePrice));
                 localStorage.setItem('servicesList', JSON.stringify(sortWebminars));
 
-                setSelectedWebminars(sortWebminars);
+                setSelectedWebminars(() => sortWebminars);
             }
         }
     };
 
     const sortByDate = (sort) => {
         if (sort === 'oldest') {
-            const sortWebminars = selectedWebminars.sort((a, b) =>
+            const sortWebminars = [...selectedWebminars].sort((a, b) =>
                 a.startDate.replace(/[^\d]/g, '') > b.startDate.replace(/[^\d]/g, '') ? 1 : -1,
             );
             console.log(sortWebminars.map((e) => e.startDate));
             setSelectedWebminars(sortWebminars);
             localStorage.setItem('webminarList', JSON.stringify(sortWebminars));
         } else if (sort === 'latest') {
-            const sortWebminars = selectedWebminars.sort((a, b) =>
+            const sortWebminars = [...selectedWebminars].sort((a, b) =>
                 a.startDate.replace(/[^\d]/g, '') < b.startDate.replace(/[^\d]/g, '') ? 1 : -1,
             );
             console.log(sortWebminars.map((e) => e.startDate));
-            setSelectedWebminars(sortWebminars);
+            setSelectedWebminars(() => sortWebminars);
             localStorage.setItem('webminarList', JSON.stringify(sortWebminars));
         }
     };
@@ -138,34 +148,34 @@ const useWebminars = (window) => {
     const sortByTitle = (sort) => {
         if (sort === 'atoz') {
             if (window === 'webinars') {
-                const sortWebminars = selectedWebminars.sort((a, b) =>
+                const sortWebminars = [...selectedWebminars].sort((a, b) =>
                     a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1,
                 );
                 console.log(sortWebminars.map((e) => e.title));
-                setSelectedWebminars(sortWebminars);
+                setSelectedWebminars(() => sortWebminars);
                 localStorage.setItem('webminarList', JSON.stringify(sortWebminars));
             } else if (window === 'services') {
-                const sortWebminars = selectedWebminars.sort((a, b) =>
+                const sortWebminars = [...selectedWebminars].sort((a, b) =>
                     a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1,
                 );
                 console.log(sortWebminars.map((e) => e.name));
-                setSelectedWebminars(sortWebminars);
+                setSelectedWebminars(() => sortWebminars);
                 localStorage.setItem('servicesList', JSON.stringify(sortWebminars));
             }
         } else if (sort === 'ztoa') {
             if (window === 'webinars') {
-                const sortWebminars = selectedWebminars.sort((a, b) =>
+                const sortWebminars = [...selectedWebminars].sort((a, b) =>
                     a.title.toLowerCase() < b.title.toLowerCase() ? 1 : -1,
                 );
                 console.log(sortWebminars.map((e) => e.title));
-                setSelectedWebminars(sortWebminars);
+                setSelectedWebminars(() => sortWebminars);
                 localStorage.setItem('webminarList', JSON.stringify(sortWebminars));
             } else if (window === 'services') {
-                const sortWebminars = selectedWebminars.sort((a, b) =>
+                const sortWebminars = [...selectedWebminars].sort((a, b) =>
                     a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1,
                 );
                 console.log(sortWebminars.map((e) => e.name));
-                setSelectedWebminars(sortWebminars);
+                setSelectedWebminars(() => sortWebminars);
                 localStorage.setItem('servicesList', JSON.stringify(sortWebminars));
             }
         }
