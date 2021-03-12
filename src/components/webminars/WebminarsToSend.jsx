@@ -1,6 +1,6 @@
 import React from 'react';
 
-const WebminarToSend = ({ webminar, deleteWebminar, window }) => {
+const WebminarToSend = ({ webminar, deleteWebminar, window, borderOnHover, borderOnLeave, border }) => {
     const scrollDiv = () => {
         let elem = document.getElementById(`${webminar.id}`);
         elem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'start' });
@@ -25,10 +25,14 @@ const WebminarToSend = ({ webminar, deleteWebminar, window }) => {
                     </svg>
                 </div>
             </button>
-            <div
-                type="button"
-                onMouseEnter={scrollDiv}
-                className={` p-4 w-14 h-14 border rounded shadow focus:outline-none flex items-center justify-center`}
+            <button
+                onClick={() => {
+                    scrollDiv();
+                    borderOnHover(webminar);
+                }}
+                className={` p-4 w-14 h-14 border ${
+                    border.id === webminar.id ? 'bg-blue-400 text-white' : ''
+                } rounded shadow focus:outline-none flex items-center justify-center`}
             >
                 {window === 'webinars' ? (
                     <div className="flex flex-col content-center justify-center">
@@ -42,7 +46,7 @@ const WebminarToSend = ({ webminar, deleteWebminar, window }) => {
                 )}
 
                 {window === 'services' ? <div className="text-xs text-center">{webminar.name}</div> : ''}
-            </div>
+            </button>
         </div>
     );
 };

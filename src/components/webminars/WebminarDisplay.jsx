@@ -5,7 +5,7 @@ import WebminarContext from '../../context/webminars';
 
 // import * as LiveChat from '@livechat/agent-app-sdk';
 
-const WebminarDisplay = ({ webminar, accessToken, chatId, window }) => {
+const WebminarDisplay = ({ webminar, accessToken, chatId, window, border }) => {
     const { selectWebminar } = useContext(WebminarContext);
 
     const [arr, setArr] = useState([]);
@@ -14,8 +14,15 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, window }) => {
     };
 
     return (
-        <div id={`${webminar.id}`} className="flex justify-between items-center">
-            <div className="border-l-2 border-blue-800 p-1 flex flex-row  justify-between space-x-10 transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105">
+        <div
+            id={`${webminar.id}`}
+            className={`flex justify-between items-center p-1 ${
+                border.id === webminar.id && border.isBordered === true ? 'bg-blue-400 text-white border rounded' : ''
+            }`}
+        >
+            <div
+                className={`border-l-2 border-blue-800 p-1 flex flex-row  justify-between space-x-10 transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105`}
+            >
                 <div className="mx-2">
                     {window === 'services' ? <div>{webminar.name}</div> : ''}
                     {window === 'webinars' ? (
@@ -43,18 +50,30 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, window }) => {
 
                     {window === 'webinars' ? (
                         Number(webminar.price) === 0 ? (
-                            <div className="text-sm text-blue-400">Free</div>
+                            <div
+                                className={`${
+                                    border.id === webminar.id && border.isBordered === true ? 'text-white' : ''
+                                }text-sm text-blue-400`}
+                            >
+                                Free
+                            </div>
                         ) : (
-                            <div className="text-sm text-blue-400">{formatCurrency(Number(webminar.price))}</div>
+                            <div
+                                className={`${
+                                    border.id === webminar.id && border.isBordered === true ? 'text-white' : ''
+                                }text-sm text-blue-400`}
+                            >
+                                {formatCurrency(Number(webminar.price))}
+                            </div>
                         )
                     ) : (
                         ''
                     )}
                     {window === 'services' ? (
                         Number(webminar.onlinePrice) === 0 ? (
-                            <div className="text-sm text-blue-400">Free</div>
+                            <div className="text-sm text-white">Free</div>
                         ) : (
-                            <div className="text-sm text-blue-400">{formatCurrency(Number(webminar.onlinePrice))}</div>
+                            <div className="text-sm text-white">{formatCurrency(Number(webminar.onlinePrice))}</div>
                         )
                     ) : (
                         ''
@@ -83,10 +102,12 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, window }) => {
                         toArray(webminar);
                         sendSelectedWebminars(arr, chatId, accessToken);
                     }}
-                    className="w-6 h-6 hover:bg-blue-800 text-blue-400 hover:text-white border rounded shadow flex items-center justify-center focus:outline-none"
+                    className={`w-6 h-6 hover:bg-blue-800 text-blue-400 hover:text-white border rounded shadow flex items-center justify-center focus:outline-none`}
                 >
                     <svg
-                        className="w-5 h-5"
+                        className={`w-5 h-5 ${
+                            border.id === webminar.id && border.isBordered === true ? 'text-white' : ''
+                        }`}
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         stroke="currentColor"
