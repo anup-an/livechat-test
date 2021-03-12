@@ -6,6 +6,7 @@ const initialState = {
     displaySelected: [],
     searchInput: '',
     keyWords: null,
+    select: { id: '', isColored: false },
     selectWebminar: () => {},
     deleteWebminar: () => {},
     searchWebminars: () => {},
@@ -14,6 +15,7 @@ const initialState = {
     sortByPrice: (sort) => {},
     sortByTitle: (sort) => {},
     sortByDate: (sort) => {},
+    colorOnSelect: (webminar) => {},
 };
 
 const WebminarContext = createContext(initialState);

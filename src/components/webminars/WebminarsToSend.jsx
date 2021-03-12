@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import WebminarContext from '../../context/webminars';
 
-const WebminarToSend = ({ webminar, deleteWebminar, window, borderOnHover, borderOnLeave, border }) => {
+const WebminarToSend = ({ webminar, deleteWebminar, window }) => {
+    const { select, colorOnSelect } = useContext(WebminarContext);
     const scrollDiv = () => {
         let elem = document.getElementById(`${webminar.id}`);
         elem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'start' });
@@ -28,10 +30,10 @@ const WebminarToSend = ({ webminar, deleteWebminar, window, borderOnHover, borde
             <button
                 onClick={() => {
                     scrollDiv();
-                    borderOnHover(webminar);
+                    colorOnSelect(webminar);
                 }}
                 className={` p-4 w-14 h-14 border ${
-                    border.id === webminar.id ? 'bg-blue-400 text-white' : ''
+                    select.id === webminar.id ? 'bg-blue-400 text-white' : ''
                 } rounded shadow focus:outline-none flex items-center justify-center`}
             >
                 {window === 'webinars' ? (

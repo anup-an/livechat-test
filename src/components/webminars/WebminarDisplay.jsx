@@ -6,7 +6,7 @@ import WebminarContext from '../../context/webminars';
 // import * as LiveChat from '@livechat/agent-app-sdk';
 
 const WebminarDisplay = ({ webminar, accessToken, chatId, window, border }) => {
-    const { selectWebminar } = useContext(WebminarContext);
+    const { select, selectWebminar } = useContext(WebminarContext);
 
     const [arr, setArr] = useState([]);
     const toArray = (webmin) => {
@@ -17,7 +17,7 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, window, border }) => {
         <div
             id={`${webminar.id}`}
             className={`flex justify-between items-center p-1 ${
-                border.id === webminar.id && border.isBordered === true ? 'bg-blue-400 text-white border rounded' : ''
+                select.id === webminar.id && select.isColored === true ? 'bg-blue-400 text-white border rounded' : ''
             }`}
         >
             <div
@@ -52,16 +52,20 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, window, border }) => {
                         Number(webminar.price) === 0 ? (
                             <div
                                 className={`${
-                                    border.id === webminar.id && border.isBordered === true ? 'text-white' : ''
-                                }text-sm text-blue-400`}
+                                    select.id === webminar.id && select.isColored === true
+                                        ? 'text-white'
+                                        : 'text-blue-400'
+                                }text-sm`}
                             >
                                 Free
                             </div>
                         ) : (
                             <div
                                 className={`${
-                                    border.id === webminar.id && border.isBordered === true ? 'text-white' : ''
-                                }text-sm text-blue-400`}
+                                    select.id === webminar.id && select.isColored === true
+                                        ? 'text-white'
+                                        : 'text-blue-400'
+                                }text-sm`}
                             >
                                 {formatCurrency(Number(webminar.price))}
                             </div>
@@ -106,7 +110,7 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, window, border }) => {
                 >
                     <svg
                         className={`w-5 h-5 ${
-                            border.id === webminar.id && border.isBordered === true ? 'text-white' : ''
+                            select.id === webminar.id && select.isColored === true ? 'text-white' : ''
                         }`}
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

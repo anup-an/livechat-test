@@ -30,6 +30,16 @@ const useWebminars = (window) => {
     const [displaySelected, setDisplaySelected] = useState([]);
     const searchInput = useRef(null);
     const [keyWords, setKeyWords] = useState('');
+    const [select, setSelect] = useState({ id: '', isColored: false });
+
+    const colorOnSelect = (webminar) => {
+        const x = { ...select };
+        if (webminar.id !== select.id) {
+            x.id = webminar.id;
+            x.isColored = true;
+            setSelect(x);
+        }
+    };
 
     // select webminar
     const selectWebminar = (webminar, webminarId) => {
@@ -49,6 +59,8 @@ const useWebminars = (window) => {
         webminars[index1].isSelected = false;
         setSelectedWebminars(webminars);
         setSendWebminars([...sendWebminars].filter((e) => e.id !== webminarId));
+        setSelect({ id: webminarId, isColored: false });
+
         if (window === 'webinars') {
             localStorage.setItem('webminarList', JSON.stringify(webminars));
         } else if (window === 'services') {
@@ -61,6 +73,7 @@ const useWebminars = (window) => {
         const x = selectedWebminars.map((e) => (e.id === webminarId ? { ...e, isSelected: false } : { ...e }));
         setSelectedWebminars(x);
         setSendWebminars([...sendWebminars.filter((webminar) => webminar.id !== webminarId)]);
+        setSelect({ id: webminarId, isColored: false });
         if (window === 'webinars') {
             localStorage.setItem('webminarList', JSON.stringify(x));
         } else if (window === 'services') {
@@ -215,6 +228,8 @@ const useWebminars = (window) => {
         displaySelected,
         searchInput,
         keyWords,
+        select,
+        colorOnSelect,
         selectWebminar,
         deleteWebminar,
         searchWebminars,

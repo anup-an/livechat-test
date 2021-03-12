@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import WebminarDisplay from '../webminars/WebminarDisplay';
 import WebminarFilter from '../webminars/WebminarFilter';
 
@@ -20,27 +20,6 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
         slideLeft,
         slideRight,
     } = useContext(WebminarContext);
-    const [border, setBorder] = useState({ id: '', isBordered: false });
-
-    const borderOnHover = (webminar) => {
-        const x = { ...border };
-        if (webminar.id !== border.id) {
-            x.id = webminar.id;
-            x.isBordered = true;
-            setBorder(x);
-        }
-    };
-
-    const borderOnLeave = (webminar) => {
-        const x = { ...border };
-        console.log(x);
-        if (webminar.id === border.id) {
-            x.id = webminar.id;
-            x.isBordered = false;
-            setBorder(x);
-        }
-    };
-    console.log(border);
 
     return (
         <div>
@@ -123,7 +102,6 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
                                         chatId={chatId}
                                         selectWebminar={selectWebminar}
                                         window={window}
-                                        border={border}
                                     />
                                 </div>
                                 <div className="border bg-gray-500 mt-2 mb-4"></div>
@@ -155,14 +133,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
                 <div className="grid grid-cols-4 sm:grid-cols-5 pb-2 gap-x-4 mb-4">
                     {displaySelected
                         ? displaySelected.map((webminar) => (
-                              <WebminarToSend
-                                  deleteWebminar={deleteWebminar}
-                                  webminar={webminar}
-                                  window={window}
-                                  border={border}
-                                  borderOnHover={() => borderOnHover(webminar)}
-                                  borderOnLeave={() => borderOnLeave(webminar)}
-                              />
+                              <WebminarToSend deleteWebminar={deleteWebminar} webminar={webminar} window={window} />
                           ))
                         : ''}
                 </div>
