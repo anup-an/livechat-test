@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
@@ -33,17 +34,13 @@ const useWebminars = (window) => {
     const [select, setSelect] = useState({ id: '', isColored: false });
 
     const colorOnSelect = (webminar) => {
-        const x = { ...select };
-        if (webminar.id !== select.id) {
-            x.id = webminar.id;
-            x.isColored = true;
-            setSelect(x);
-        }
+        setSelect({ id: webminar.id, isColored: true });
     };
 
     // select webminar
     const selectWebminar = (webminar, webminarId) => {
         const foundWebminar = selectedWebminars.find((e) => e.id === webminarId && e.isSelected === true);
+        console.log(webminar.id, webminarId);
         if (!foundWebminar) {
             const x = selectedWebminars.map((e) => (e.id === webminarId ? { ...e, isSelected: true } : { ...e }));
             setSelectedWebminars(x);
@@ -59,7 +56,7 @@ const useWebminars = (window) => {
         webminars[index1].isSelected = false;
         setSelectedWebminars(webminars);
         setSendWebminars([...sendWebminars].filter((e) => e.id !== webminarId));
-        setSelect({ id: webminarId, isColored: false });
+        setSelect({ id: webminar.id, isColored: false });
 
         if (window === 'webinars') {
             localStorage.setItem('webminarList', JSON.stringify(webminars));

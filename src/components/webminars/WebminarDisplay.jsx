@@ -5,7 +5,7 @@ import WebminarContext from '../../context/webminars';
 
 // import * as LiveChat from '@livechat/agent-app-sdk';
 
-const WebminarDisplay = ({ webminar, accessToken, chatId, window, border }) => {
+const WebminarDisplay = ({ webminar, accessToken, chatId, window }) => {
     const { select, selectWebminar } = useContext(WebminarContext);
 
     const [arr, setArr] = useState([]);
@@ -17,7 +17,9 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, window, border }) => {
         <div
             id={`${webminar.id}`}
             className={`flex justify-between items-center p-1 ${
-                select.id === webminar.id && select.isColored === true ? 'bg-blue-400 text-white border rounded' : ''
+                select.id === webminar.id && select.isColored === true
+                    ? 'bg-blue-400 text-white border rounded'
+                    : 'bg-white'
             }`}
         >
             <div

@@ -33,7 +33,7 @@ const WebminarToSend = ({ webminar, deleteWebminar, window }) => {
                     colorOnSelect(webminar);
                 }}
                 className={` p-4 w-14 h-14 border ${
-                    select.id === webminar.id ? 'bg-blue-400 text-white' : ''
+                    select.id === webminar.id && select.isColored === true ? 'bg-blue-400 text-white' : ''
                 } rounded shadow focus:outline-none flex items-center justify-center`}
             >
                 {window === 'webinars' ? (
