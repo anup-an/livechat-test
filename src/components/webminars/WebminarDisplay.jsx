@@ -37,6 +37,7 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, window }) => {
                     ) : (
                         ''
                     )}
+                    {window === 'consultants' ? <div>{webminar.name}</div> : ''}
                 </div>
                 <div>
                     {window === 'services' ? (

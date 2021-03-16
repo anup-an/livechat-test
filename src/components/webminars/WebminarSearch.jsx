@@ -1,6 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext } from 'react';
-import WebminarDisplay from '../webminars/WebminarDisplay';
+import WebminarDisplay from '../item_display/webminar';
+import ServiceDisplay from '../item_display/service';
+import ConsultantDisplay from '../item_display/consultant';
+
 import WebminarFilter from '../webminars/WebminarFilter';
 
 import { sendSelectedWebminars } from '../../utils/config';
@@ -14,6 +17,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
         displaySelected,
         searchInput,
         keyWords,
+        resetSelection,
         selectWebminar,
         deleteWebminar,
         searchWebminars,
@@ -25,13 +29,10 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
         <div>
             <header className="fixed top-0 right-0 left-0 w-full z-10 border shadow flex flex-col space-y-4 bg-white flex content-center">
                 <div className="flex flex-col space-y-4">
-                    <div className="flex justify-between">
-                        <div className="text-left mx-10 ">
-                            <div>{window.charAt(0).toUpperCase() + window.slice(1)}</div>
-                        </div>
-                        <button onClick={closeModal} type="button">
+                    <div className="text-right">
+                        <button className="border rounded shadow" onClick={closeModal} type="button">
                             <svg
-                                className="w-6 h-6"
+                                className="w-6 h-6 text-gray-700"
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 stroke="currentColor"
@@ -96,13 +97,39 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
                         webminar.isDisplayed === true ? (
                             <div key={webminar.id}>
                                 <div className="h-full">
-                                    <WebminarDisplay
-                                        webminar={webminar}
-                                        accessToken={accessToken}
-                                        chatId={chatId}
-                                        selectWebminar={selectWebminar}
-                                        window={window}
-                                    />
+                                    {window === 'webinars' ? (
+                                        <WebminarDisplay
+                                            webminar={webminar}
+                                            accessToken={accessToken}
+                                            chatId={chatId}
+                                            selectWebminar={selectWebminar}
+                                            window={window}
+                                        />
+                                    ) : (
+                                        ''
+                                    )}
+                                    {window === 'services' ? (
+                                        <ServiceDisplay
+                                            webminar={webminar}
+                                            accessToken={accessToken}
+                                            chatId={chatId}
+                                            selectWebminar={selectWebminar}
+                                            window={window}
+                                        />
+                                    ) : (
+                                        ''
+                                    )}
+                                    {window === 'consultants' ? (
+                                        <ConsultantDisplay
+                                            webminar={webminar}
+                                            accessToken={accessToken}
+                                            chatId={chatId}
+                                            selectWebminar={selectWebminar}
+                                            window={window}
+                                        />
+                                    ) : (
+                                        ''
+                                    )}
                                 </div>
                                 <div className="border bg-gray-500 mt-2 mb-4"></div>
                             </div>
@@ -155,13 +182,22 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
-                <button
-                    onClick={() => sendSelectedWebminars(sendWebminars, chatId, accessToken)}
-                    type="button"
-                    className="py-1 px-2 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
-                >
-                    Send
-                </button>
+                <div>
+                    <button
+                        onClick={resetSelection}
+                        type="button"
+                        className="p-1 bg-red-400 hover:bg-red-600 border rounded text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
+                    >
+                        Reset
+                    </button>
+                    <button
+                        onClick={() => sendSelectedWebminars(sendWebminars, chatId, accessToken)}
+                        type="button"
+                        className="py-1 px-2 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
+                    >
+                        Send
+                    </button>
+                </div>
             </footer>
         </div>
     );

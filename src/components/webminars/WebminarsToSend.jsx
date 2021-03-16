@@ -48,6 +48,7 @@ const WebminarToSend = ({ webminar, deleteWebminar, window }) => {
                 )}
 
                 {window === 'services' ? <div className="text-xs text-center">{webminar.name}</div> : ''}
+                {window === 'consultants' ? <div className="text-xs text-center">{webminar.name}</div> : ''}
             </button>
         </div>
     );

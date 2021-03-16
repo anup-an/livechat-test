@@ -13,6 +13,11 @@ const getAllServices = () => {
     return JSON.parse(list);
 };
 
+const getAllConsultants = () => {
+    const list = localStorage.getItem('consultantsList');
+    return JSON.parse(list);
+};
+
 const useWebminars = (window) => {
     const [selectedWebminars, setSelectedWebminars] = useState([]);
     const [sendWebminars, setSendWebminars] = useState([]);
@@ -25,6 +30,9 @@ const useWebminars = (window) => {
             setSelectedWebminars(getAllServices());
             setSendWebminars(getAllServices().filter((e) => e.isSelected === true));
             console.log(selectedWebminars);
+        } else if (window === 'consultants') {
+            setSelectedWebminars(getAllConsultants());
+            setSendWebminars(getAllConsultants().filter((e) => e.isSelected === true));
         }
     }, [window]);
 
@@ -35,6 +43,12 @@ const useWebminars = (window) => {
 
     const colorOnSelect = (webminar) => {
         setSelect({ id: webminar.id, isColored: true });
+    };
+    const resetSelection = () => {
+        setSendWebminars([]);
+        const x = selectedWebminars.map((e) => ({ ...e, isSelected: false }));
+        setSelectedWebminars(x);
+        setSelect({ id: '', isColored: false });
     };
 
     // select webminar
@@ -49,11 +63,13 @@ const useWebminars = (window) => {
                 localStorage.setItem('webminarList', JSON.stringify(x));
             } else if (window === 'services') {
                 localStorage.setItem('servicesList', JSON.stringify(x));
+            } else if (window === 'consultants') {
+                localStorage.setItem('consultantsList', JSON.stringify(x));
             }
         }
         const index1 = selectedWebminars.indexOf(foundWebminar);
         const webminars = [...selectedWebminars];
-        webminars[index1].isSelected = false;
+        webminars ? (webminars[index1].isSelected = false) : '';
         setSelectedWebminars(webminars);
         setSendWebminars([...sendWebminars].filter((e) => e.id !== webminarId));
         setSelect({ id: webminar.id, isColored: false });
@@ -62,6 +78,8 @@ const useWebminars = (window) => {
             localStorage.setItem('webminarList', JSON.stringify(webminars));
         } else if (window === 'services') {
             localStorage.setItem('servicesList', JSON.stringify(webminars));
+        } else if (window === 'consultants') {
+            localStorage.setItem('consultantsList', JSON.stringify(webminars));
         }
     };
 
@@ -75,6 +93,8 @@ const useWebminars = (window) => {
             localStorage.setItem('webminarList', JSON.stringify(x));
         } else if (window === 'services') {
             localStorage.setItem('servicesList', JSON.stringify(x));
+        } else if (window === 'consultants') {
+            localStorage.setItem('consultantsList', JSON.stringify(x));
         }
     };
 
@@ -201,7 +221,7 @@ const useWebminars = (window) => {
         axios
             .get(`https://api-test.meeteo.io/thirdParty/v1/list_${window}?app_id=678901&search=${keyWords}`)
             .then((response) => {
-                console.log(response);
+                console.log(response.data.data.data);
                 const ids = response.data.data.data.map((e) => e.id);
                 const displayWebminars = selectedWebminars.map((webminar) =>
                     webminar.id === ids.find((e) => e === webminar.id)
@@ -213,6 +233,9 @@ const useWebminars = (window) => {
                     setSelectedWebminars(() => displayWebminars);
                 } else if (window === 'services') {
                     localStorage.setItem('servicesList', JSON.stringify(displayWebminars));
+                    setSelectedWebminars(() => displayWebminars);
+                } else if (window === 'consultants') {
+                    localStorage.setItem('consultantsList', JSON.stringify(displayWebminars));
                     setSelectedWebminars(() => displayWebminars);
                 }
             })
@@ -226,6 +249,7 @@ const useWebminars = (window) => {
         searchInput,
         keyWords,
         select,
+        resetSelection,
         colorOnSelect,
         selectWebminar,
         deleteWebminar,

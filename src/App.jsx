@@ -13,6 +13,8 @@ Modal.setAppElement('#root');
 const App = ({ accessToken }) => {
     const [webminarList, setWebminarList] = useState([]);
     const [servicesList, setServicesList] = useState([]);
+    const [consultantsList, setConsultantsList] = useState([]);
+
     const [chatId, setChatId] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [modalContent, setModalContent] = useState();
@@ -80,6 +82,24 @@ const App = ({ accessToken }) => {
             });
     }, []);
 
+    useEffect(() => {
+        axios
+            .get('https://api-test.meeteo.io/thirdParty/v1/list_consultants?app_id=678901')
+            .then((response) => {
+                console.log(response.data.data.data);
+                setConsultantsList(response.data.data.data);
+                localStorage.setItem(
+                    'consultantsList',
+                    JSON.stringify(
+                        response.data.data.data.map((e) => ({ ...e, isSelected: false, isDisplayed: true })),
+                    ),
+                );
+            })
+            .catch((err) => {
+                return err.response;
+            });
+    }, []);
+
     return (
         <div className="border rounded shadow p-10 m-2">
             <div className="flex flex-col space-y-6">
@@ -98,7 +118,7 @@ const App = ({ accessToken }) => {
                         type="button"
                         className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
                     >
-                        Open services list
+                        Open service list
                     </button>
                 </div>
 
@@ -108,7 +128,16 @@ const App = ({ accessToken }) => {
                         type="button"
                         className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
                     >
-                        Search webminars
+                        Open webminar list
+                    </button>
+                </div>
+                <div>
+                    <button
+                        onClick={() => openList('consultants')}
+                        type="button"
+                        className="w-full p-4 border rounded shadow bg-blue-400 hover:bg-blue-800 text-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
+                    >
+                        Open consultant list
                     </button>
                 </div>
             </div>

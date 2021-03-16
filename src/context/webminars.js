@@ -7,6 +7,7 @@ const initialState = {
     searchInput: '',
     keyWords: null,
     select: { id: '', isColored: false },
+    resetSelection: () => {},
     selectWebminar: () => {},
     deleteWebminar: () => {},
     searchWebminars: () => {},
