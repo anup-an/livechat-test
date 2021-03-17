@@ -48,7 +48,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
                         </button>
                     </div>
 
-                    <div className="relative mx-10 flex space-y-14">
+                    <div className="relative mx-4 flex space-y-14">
                         <div className="z-10 absolute w-full">
                             <WebminarFilter window={window} />
                         </div>
@@ -75,7 +75,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
                                         </svg>
                                     </button>
                                     <input
-                                        className="px-10 py-2 border rounded w-full bg-gray-100 text-sm focus:outline-none"
+                                        className="px-10 py-2 border rounded bg-gray-100 text-sm focus:outline-none"
                                         id="search"
                                         name="search"
                                         ref={searchInput}
@@ -91,7 +91,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
                 <div className="text-center">Search results for '{keyWords}'</div>
             </header>
 
-            <main className="p-8 mt-32 mb-20">
+            <main className="mt-52 mb-20">
                 <div className="flex flex-col space-y-2 mt-4">
                     {selectedWebminars.map((webminar) =>
                         webminar.isDisplayed === true ? (
