@@ -23,13 +23,36 @@ const WebminarFilter = ({ window }) => {
     };
 
     return (
-        <div className="flex flex-row justify-between space-x-6">
-            <div className="flex flex-col w-1/3">
-                <div className="border shadow bg-gray-100 p-1 flex flex-row justify-between items-center space-x-4 w-full">
-                    <div>Pricing:</div>
-                    <button type="button" onClick={() => showDropDown('price')} className="focus:outline-none">
+        <div className="flex flex-col text-sm">
+            <div className="border rounded bg-gray-100 p-2 flex flex-row justify-between items-center space-x-4 w-full">
+                <div className="text-gray-500">Sort</div>
+                <button type="button" onClick={() => showDropDown('price')} className="ocus:outline-none">
+                    <svg
+                        className="w-5 h-5 text-gray-500"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                        />
+                    </svg>
+                </button>
+            </div>
+            <div className={`relative border shadow ${display.price === true ? 'block' : 'hidden'}`}>
+                <div className="absolute border-b flex flex-row">
+                    <div>Price</div>
+                    <button
+                        type="button"
+                        onClick={() => sortByPrice('low')}
+                        className="p-1 text-center bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
+                    >
                         <svg
-                            className="w-4 h-4 "
+                            className="h-5 w-5"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             stroke="currentColor"
@@ -39,37 +62,42 @@ const WebminarFilter = ({ window }) => {
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 stroke-width="2"
-                                d="M4 6h16M4 10h16M4 14h16M4 18h16"
+                                d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
                             />
                         </svg>
                     </button>
-                </div>
-                <div className={`border shadow ${display.price === true ? 'block' : 'hidden'}`}>
-                    <div className="border-b">
-                        <button
-                            type="button"
-                            onClick={() => sortByPrice('low')}
-                            className="p-1 text-center bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
-                        >
-                            Low to High
-                        </button>
-                    </div>
                     <button
                         type="button"
                         onClick={() => sortByPrice('high')}
                         className="p-1 text-center bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
                     >
-                        High to Low
+                        <svg
+                            className="h-5 w-5"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"
+                            />
+                        </svg>
                     </button>
-                </div>{' '}
-            </div>
-            {window === 'webinars' ? (
-                <div className="flex flex-col w-1/3">
-                    <div className="border shadow bg-gray-100 p-1 flex flex-row justify-between items-center w-full">
-                        <div>Date:</div>
-                        <button type="button" className="focus:outline-none" onClick={() => showDropDown('date')}>
+                </div>
+
+                {window === 'webinars' ? (
+                    <div className="absolute border-b flex flex-row">
+                        <div>Date</div>
+                        <button
+                            type="button"
+                            onClick={() => sortByDate('oldest')}
+                            className="p-1 text-center bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
+                        >
                             <svg
-                                className="w-4 h-4 "
+                                className="h-5 w-5"
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 stroke="currentColor"
@@ -79,39 +107,43 @@ const WebminarFilter = ({ window }) => {
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
-                                    d="M4 6h16M4 10h16M4 14h16M4 18h16"
+                                    d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
                                 />
                             </svg>
                         </button>
-                    </div>{' '}
-                    <div className={`border shadow ${display.date === true ? 'block' : 'hidden'}`}>
-                        <div className="border-b">
-                            <button
-                                onClick={() => sortByDate('latest')}
-                                type="button"
-                                className="p-1 text-center bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
-                            >
-                                Latest first
-                            </button>
-                        </div>
                         <button
-                            onClick={() => sortByDate('oldest')}
                             type="button"
+                            onClick={() => sortByDate('latest')}
                             className="p-1 text-center bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
                         >
-                            Oldest first
+                            <svg
+                                className="h-5 w-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"
+                                />
+                            </svg>
                         </button>
                     </div>
-                </div>
-            ) : (
-                ''
-            )}
-            <div className="flex flex-col w-1/3">
-                <div className="border shadow bg-gray-100 p-1 flex flex-row justify-between items-center w-full">
-                    <div>Title:</div>
-                    <button type="button" onClick={() => showDropDown('title')} className="focus:outline-none">
+                ) : (
+                    ''
+                )}
+                <div className="absolute border-b flex flex-row">
+                    <div>Title</div>
+                    <button
+                        type="button"
+                        onClick={() => sortByTitle('atoz')}
+                        className="p-1 text-center bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
+                    >
                         <svg
-                            className="w-4 h-4 "
+                            className="h-5 w-5"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             stroke="currentColor"
@@ -121,27 +153,29 @@ const WebminarFilter = ({ window }) => {
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 stroke-width="2"
-                                d="M4 6h16M4 10h16M4 14h16M4 18h16"
+                                d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
                             />
                         </svg>
                     </button>
-                </div>{' '}
-                <div className={`border shadow ${display.title === true ? 'block' : 'hidden'}`}>
-                    <div className="border-b">
-                        <button
-                            typr="button"
-                            onClick={() => sortByTitle('atoz')}
-                            className="p-1 bg-white hover:bg-blue-800 hover:text-white text-center w-full focus:outline-none"
-                        >
-                            A to Z
-                        </button>
-                    </div>
                     <button
-                        typr="button"
+                        type="button"
                         onClick={() => sortByTitle('ztoa')}
-                        className="p-1 bg-white hover:bg-blue-800 hover:text-white text-center w-full focus:outline-none"
+                        className="p-1 text-center bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
                     >
-                        Z to A
+                        <svg
+                            className="h-5 w-5"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"
+                            />
+                        </svg>
                     </button>
                 </div>
             </div>
