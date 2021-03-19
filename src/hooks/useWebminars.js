@@ -36,10 +36,15 @@ const useWebminars = (window) => {
         }
     }, [window]);
 
+    const [display, setDisplay] = useState(false);
     const [displaySelected, setDisplaySelected] = useState([]);
     const searchInput = useRef(null);
-    const [keyWords, setKeyWords] = useState('');
+    const [keyWords, setKeyWords] = useState({ webinars: '', services: '', consultants: '' });
     const [select, setSelect] = useState({ id: '', isColored: false });
+
+    const showDropDown = () => {
+        display ? setDisplay(false) : setDisplay(true);
+    };
 
     const colorOnSelect = (webminar) => {
         setSelect({ id: webminar.id, isColored: true });
@@ -211,15 +216,14 @@ const useWebminars = (window) => {
         }
     };
 
-    const searchWebminars = (event) => {
+    const searchWebminars = (event, window) => {
         event.preventDefault();
-        setKeyWords(searchInput.current.value);
+        setKeyWords({ ...keyWords, [window]: searchInput.current.value });
     };
 
     useEffect(() => {
-        console.log(window);
         axios
-            .get(`https://api-test.meeteo.io/thirdParty/v1/list_${window}?app_id=678901&search=${keyWords}`)
+            .get(`https://api-test.meeteo.io/thirdParty/v1/list_${window}?app_id=678901&search=${keyWords[window]}`)
             .then((response) => {
                 console.log(response.data.data.data);
                 const ids = response.data.data.data.map((e) => e.id);
@@ -241,6 +245,9 @@ const useWebminars = (window) => {
             })
             .catch((error) => console.log(error));
     }, [keyWords]);
+    useEffect(() => {
+        setDisplay(false);
+    }, [window]);
 
     return {
         selectedWebminars,
@@ -249,6 +256,8 @@ const useWebminars = (window) => {
         searchInput,
         keyWords,
         select,
+        display,
+        showDropDown,
         resetSelection,
         colorOnSelect,
         selectWebminar,

@@ -1,14 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import WebminarContext from '../../context/webminars';
 
 const WebminarFilter = ({ window }) => {
-    const { sortByPrice, sortByTitle, sortByDate } = useContext(WebminarContext);
-
-    const [display, setDisplay] = useState(false);
-
-    const showDropDown = () => {
-        display ? setDisplay(false) : setDisplay(true);
-    };
+    const { sortByPrice, sortByTitle, sortByDate, display, showDropDown } = useContext(WebminarContext);
 
     return (
         <div className="flex flex-col text-sm w-full">

@@ -63,7 +63,10 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
                                 className={`border-b ${
                                     window === 'webinars' ? 'text-white bg-blue-800' : 'text-gray-500'
                                 } w-full p-1 focus:outline-none`}
-                                onClick={() => openList('webinars')}
+                                onClick={() => {
+                                    openList('webinars');
+                                    document.getElementById('searchForm').reset();
+                                }}
                             >
                                 Webinars
                             </button>
@@ -71,7 +74,10 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
                                 className={`border-b ${
                                     window === 'services' ? 'text-white bg-blue-800' : 'text-gray-500'
                                 } w-full p-1 focus:outline-none`}
-                                onClick={() => openList('services')}
+                                onClick={() => {
+                                    openList('services');
+                                    document.getElementById('searchForm').reset();
+                                }}
                             >
                                 Services
                             </button>
@@ -79,17 +85,20 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
                                 className={` ${
                                     window === 'consultants' ? 'text-white bg-blue-800' : 'text-gray-500'
                                 } w-full p-1 focus:outline-none`}
-                                onClick={() => openList('consultants')}
+                                onClick={() => {
+                                    openList('consultants');
+                                    document.getElementById('searchForm').reset();
+                                }}
                             >
                                 Consultants
                             </button>{' '}
                         </div>
                         <div onClick={changeWidth} className="flex justify-center">
                             <div>
-                                <form onSubmit={searchWebminars}>
+                                <form id="searchForm" onSubmit={searchWebminars}>
                                     <label htmlFor="search" className="flex flex-row items-center">
                                         <button
-                                            onClick={searchWebminars}
+                                            onClick={(event) => searchWebminars(event, window)}
                                             className="absolute text-gray-500 focus:outline-none hover:text-white hover:text-blue-800 px-2"
                                         >
                                             <svg
@@ -112,7 +121,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
                                                 !width ? 'w-2/3' : ''
                                             }`}
                                             id="search"
-                                            name="search"
+                                            name={window}
                                             ref={searchInput}
                                             placeholder="Search"
                                         ></input>
@@ -127,7 +136,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
                         </div>
                     </div>
                 </div>
-                <div className="text-center text-sm mt-6">Search results for '{keyWords}'</div>
+                <div className="text-center text-sm mt-6">Search results for '{keyWords[window]}'</div>
             </header>
 
             <main className="mt-36 mb-20">
