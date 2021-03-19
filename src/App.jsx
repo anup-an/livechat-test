@@ -32,7 +32,13 @@ const App = ({ accessToken }) => {
         openModal();
         setWindow(list);
         setModalContent(
-            <WebminarSearch closeModal={closeModal} accessToken={accessToken} chatId={chatId} window={list} />,
+            <WebminarSearch
+                closeModal={closeModal}
+                accessToken={accessToken}
+                chatId={chatId}
+                window={list}
+                openList={openList}
+            />,
         );
     };
 

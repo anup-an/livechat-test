@@ -4,29 +4,17 @@ import WebminarContext from '../../context/webminars';
 const WebminarFilter = ({ window }) => {
     const { sortByPrice, sortByTitle, sortByDate } = useContext(WebminarContext);
 
-    const [display, setDisplay] = useState({ price: false, date: false, title: false });
+    const [display, setDisplay] = useState(false);
 
-    const showDropDown = (menu) => {
-        if (menu === 'price') {
-            display.price === true
-                ? setDisplay({ ...display, price: false })
-                : setDisplay({ ...display, price: true, date: false, title: false });
-        } else if (menu === 'date') {
-            display.date === true
-                ? setDisplay({ ...display, date: false })
-                : setDisplay({ ...display, date: true, price: false, title: false });
-        } else if (menu === 'title') {
-            display.title === true
-                ? setDisplay({ ...display, title: false })
-                : setDisplay({ ...display, title: true, price: false, date: false });
-        }
+    const showDropDown = () => {
+        display ? setDisplay(false) : setDisplay(true);
     };
 
     return (
-        <div className="flex flex-col text-sm">
-            <div className="border rounded bg-gray-100 p-2 flex flex-row justify-between items-center space-x-4 w-full">
+        <div className="flex flex-col text-sm w-full">
+            <div className="relative order rounded bg-gray-100 p-2 flex flex-row justify-between items-center space-x-4 w-full">
                 <div className="text-gray-500">Sort</div>
-                <button type="button" onClick={() => showDropDown('price')} className="ocus:outline-none">
+                <button type="button" onClick={showDropDown} className="focus:outline-none">
                     <svg
                         className="w-5 h-5 text-gray-500"
                         xmlns="http://www.w3.org/2000/svg"
@@ -43,13 +31,13 @@ const WebminarFilter = ({ window }) => {
                     </svg>
                 </button>
             </div>
-            <div className={`relative border shadow ${display.price === true ? 'block' : 'hidden'}`}>
-                <div className="absolute border-b flex flex-row">
+            <div className={`absolute mt-10 right-4 bg-white border rounded shadow ${display ? 'block' : 'hidden'}`}>
+                <div className="border-b flex flex-row p-2 space-x-2 items-center">
                     <div>Price</div>
                     <button
                         type="button"
                         onClick={() => sortByPrice('low')}
-                        className="p-1 text-center bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
+                        className="text-center border rounded shadow-lg p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
                     >
                         <svg
                             className="h-5 w-5"
@@ -69,7 +57,7 @@ const WebminarFilter = ({ window }) => {
                     <button
                         type="button"
                         onClick={() => sortByPrice('high')}
-                        className="p-1 text-center bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
+                        className="text-center border rounded shadow-lg p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
                     >
                         <svg
                             className="h-5 w-5"
@@ -89,12 +77,12 @@ const WebminarFilter = ({ window }) => {
                 </div>
 
                 {window === 'webinars' ? (
-                    <div className="absolute border-b flex flex-row">
+                    <div className="p-2 border-b flex flex-row space-x-2 items-center">
                         <div>Date</div>
                         <button
                             type="button"
                             onClick={() => sortByDate('oldest')}
-                            className="p-1 text-center bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
+                            className="text-center border rounded shadow-lg p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
                         >
                             <svg
                                 className="h-5 w-5"
@@ -114,7 +102,7 @@ const WebminarFilter = ({ window }) => {
                         <button
                             type="button"
                             onClick={() => sortByDate('latest')}
-                            className="p-1 text-center bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
+                            className="text-center border rounded shadow-lg p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
                         >
                             <svg
                                 className="h-5 w-5"
@@ -135,12 +123,12 @@ const WebminarFilter = ({ window }) => {
                 ) : (
                     ''
                 )}
-                <div className="absolute border-b flex flex-row">
+                <div className="p-2 border-b flex flex-row space-x-2 items-center">
                     <div>Title</div>
                     <button
                         type="button"
                         onClick={() => sortByTitle('atoz')}
-                        className="p-1 text-center bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
+                        className="text-center border rounded shadow-lg p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
                     >
                         <svg
                             className="h-5 w-5"
@@ -160,7 +148,7 @@ const WebminarFilter = ({ window }) => {
                     <button
                         type="button"
                         onClick={() => sortByTitle('ztoa')}
-                        className="p-1 text-center bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
+                        className="border shadow-lg rounded p-1 text-center bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
                     >
                         <svg
                             className="h-5 w-5"

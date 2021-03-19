@@ -10,7 +10,7 @@ import { sendSelectedWebminars } from '../../utils/config';
 import WebminarToSend from './WebminarsToSend';
 import WebminarContext from '../../context/webminars';
 
-const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
+const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) => {
     const {
         selectedWebminars,
         sendWebminars,
@@ -63,6 +63,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
                                 className={`border-b ${
                                     window === 'webinars' ? 'text-white bg-blue-800' : 'text-gray-500'
                                 } w-full p-1 focus:outline-none`}
+                                onClick={() => openList('webinars')}
                             >
                                 Webinars
                             </button>
@@ -70,6 +71,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
                                 className={`border-b ${
                                     window === 'services' ? 'text-white bg-blue-800' : 'text-gray-500'
                                 } w-full p-1 focus:outline-none`}
+                                onClick={() => openList('services')}
                             >
                                 Services
                             </button>
@@ -77,6 +79,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
                                 className={` ${
                                     window === 'consultants' ? 'text-white bg-blue-800' : 'text-gray-500'
                                 } w-full p-1 focus:outline-none`}
+                                onClick={() => openList('consultants')}
                             >
                                 Consultants
                             </button>{' '}
@@ -124,10 +127,10 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window }) => {
                         </div>
                     </div>
                 </div>
-                <div className="text-center text-sm mt-4">Search results for '{keyWords}'</div>
+                <div className="text-center text-sm mt-6">Search results for '{keyWords}'</div>
             </header>
 
-            <main className="mt-32 mb-20">
+            <main className="mt-36 mb-20">
                 <div className="flex flex-col space-y-2 mt-4">
                     {selectedWebminars.map((webminar) =>
                         webminar.isDisplayed === true ? (
