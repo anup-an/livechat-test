@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import WebminarContext from '../../context/webminars';
 
 const WebminarFilter = ({ window }) => {
-    const { sortByPrice, sortByTitle, sortByDate, display, showDropDown } = useContext(WebminarContext);
+    const { sortByPrice, sortByTitle, sortByDate, display, showDropDown, sortList } = useContext(WebminarContext);
 
     return (
-        <div className="flex flex-col text-sm w-full">
-            <div className="relative order rounded bg-gray-100 p-2 flex flex-row justify-between items-center space-x-4 w-full">
+        <div className="flex flex-col text-xs w-full">
+            <div className="relative order rounded bg-gray-100 p-1 flex flex-row justify-between items-center space-x-4 w-full">
                 <div className="text-gray-500">Sort</div>
                 <button type="button" onClick={showDropDown} className="focus:outline-none">
                     <svg
@@ -25,13 +25,15 @@ const WebminarFilter = ({ window }) => {
                     </svg>
                 </button>
             </div>
-            <div className={`absolute mt-10 right-4 bg-white border rounded shadow ${display ? 'block' : 'hidden'}`}>
+            <div className={`absolute mt-8 right-0 bg-white border rounded shadow ${display ? 'block' : 'hidden'}`}>
                 <div className="border-b flex flex-row p-2 space-x-2 items-center">
                     <div>Price</div>
                     <button
                         type="button"
                         onClick={() => sortByPrice('low')}
-                        className="text-center border rounded shadow-lg p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
+                        className={`text-center border rounded shadow-lg ${
+                            sortList[window] === 'Price (low to high)' ? 'bg-blue-800 text-white' : ''
+                        } p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none`}
                     >
                         <svg
                             className="h-5 w-5"
@@ -51,7 +53,9 @@ const WebminarFilter = ({ window }) => {
                     <button
                         type="button"
                         onClick={() => sortByPrice('high')}
-                        className="text-center border rounded shadow-lg p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
+                        className={`text-center border rounded shadow-lg ${
+                            sortList[window] === 'Price (high to low)' ? 'bg-blue-800 text-white' : ''
+                        } p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none`}
                     >
                         <svg
                             className="h-5 w-5"
@@ -76,7 +80,9 @@ const WebminarFilter = ({ window }) => {
                         <button
                             type="button"
                             onClick={() => sortByDate('oldest')}
-                            className="text-center border rounded shadow-lg p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
+                            className={`text-center border rounded shadow-lg ${
+                                sortList[window] === 'Date (oldest first)' ? 'bg-blue-800 text-white' : ''
+                            } p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none`}
                         >
                             <svg
                                 className="h-5 w-5"
@@ -96,7 +102,9 @@ const WebminarFilter = ({ window }) => {
                         <button
                             type="button"
                             onClick={() => sortByDate('latest')}
-                            className="text-center border rounded shadow-lg p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
+                            className={`text-center border rounded shadow-lg ${
+                                sortList[window] === 'Date (latest first)' ? 'bg-blue-800 text-white' : ''
+                            } p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none`}
                         >
                             <svg
                                 className="h-5 w-5"
@@ -122,7 +130,9 @@ const WebminarFilter = ({ window }) => {
                     <button
                         type="button"
                         onClick={() => sortByTitle('atoz')}
-                        className="text-center border rounded shadow-lg p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
+                        className={`text-center border rounded shadow-lg ${
+                            sortList[window] === 'Title (A-Z)' ? 'bg-blue-800 text-white' : ''
+                        } p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none`}
                     >
                         <svg
                             className="h-5 w-5"
@@ -142,7 +152,9 @@ const WebminarFilter = ({ window }) => {
                     <button
                         type="button"
                         onClick={() => sortByTitle('ztoa')}
-                        className="border shadow-lg rounded p-1 text-center bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none"
+                        className={`text-center border rounded shadow-lg ${
+                            sortList[window] === 'Title (Z-A)' ? 'bg-blue-800 text-white' : ''
+                        } p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none`}
                     >
                         <svg
                             className="h-5 w-5"

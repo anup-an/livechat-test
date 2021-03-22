@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { formatCurrency } from './index';
 export const config = {
-    client_id: 'f79f914bd1d7803da8b4d8821edd1aa5',
+    client_id: 'df79ea4c84b4880b66c61e2e469c9bc4',
     livechat_server_url: 'https://api.livechatinc.com/v3.2',
     account_url: 'https://accounts.livechatinc.com/',
     meetio_server_url: {
@@ -74,7 +74,7 @@ export const sendSelectedWebminars = (webminars, chatId, accessToken, window) =>
                         text: 'Join webminar',
                         postback_id: 'action_yes',
                         type: 'webview',
-                        value: `${webminar.company.domain}/webminar-detail/${webminar.slug}`,
+                        value: `${webminar.webinarUrl}`,
                         webview_height: 'full',
                         user_ids: [],
                     },

@@ -8,7 +8,7 @@ const WebminarToSend = ({ webminar, deleteWebminar, window }) => {
         elem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'start' });
     };
     return (
-        <div className=" transition duration-500 ease-in-out transform hover:translate-y-0 hover:scale-105">
+        <div className=" transition duration-500 ease-in-out transform hover:translate-y-0 hover:scale-105 text-xs">
             <button onClick={() => deleteWebminar(webminar.id)} type="button">
                 <div className={`absolute z-10 -mt-1 -ml-1.5 border rounded-full bg-red-600 text-white`}>
                     <svg
@@ -32,8 +32,10 @@ const WebminarToSend = ({ webminar, deleteWebminar, window }) => {
                     scrollDiv();
                     colorOnSelect(webminar);
                 }}
-                className={` p-4 w-14 h-14 border ${
-                    select.id === webminar.id && select.isColored === true ? 'bg-blue-400 text-white' : ''
+                className={` p-4 w-12 h-12 border ${
+                    select.id === webminar.id && select.isColored === true
+                        ? 'bg-gradient-to-r from-blue-400 to-blue-900 text-white'
+                        : ''
                 } rounded shadow focus:outline-none flex items-center justify-center`}
             >
                 {window === 'webinars' ? (

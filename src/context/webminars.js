@@ -8,6 +8,11 @@ const initialState = {
     keyWords: null,
     display: false,
     select: { id: '', isColored: false },
+    sortList: {
+        webinars: '',
+        consultants: '',
+        services: '',
+    },
     showDropDown: () => {},
     resetSelection: () => {},
     selectWebminar: () => {},

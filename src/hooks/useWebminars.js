@@ -41,6 +41,11 @@ const useWebminars = (window) => {
     const searchInput = useRef(null);
     const [keyWords, setKeyWords] = useState({ webinars: '', services: '', consultants: '' });
     const [select, setSelect] = useState({ id: '', isColored: false });
+    const [sortList, setSortList] = useState({
+        webinars: '',
+        consultants: '',
+        services: '',
+    });
 
     const showDropDown = () => {
         display ? setDisplay(false) : setDisplay(true);
@@ -132,6 +137,12 @@ const useWebminars = (window) => {
 
     const sortByPrice = (sort) => {
         if (sort === 'low') {
+            setSortList({ ...sortList, webinars: '', services: '', consultants: '' });
+
+            const x = { ...sortList, [window]: 'Price (low - high)' };
+            setSortList(x);
+            console.log(sortList);
+
             if (window === 'webinars') {
                 const sortWebminars = [...selectedWebminars].sort((a, b) => (a.price > b.price ? 1 : -1));
                 console.log(sortWebminars.map((e) => e.price));
@@ -146,6 +157,12 @@ const useWebminars = (window) => {
                 setSelectedWebminars(() => sortWebminars);
             }
         } else if (sort === 'high') {
+            setSortList({ ...sortList, webinars: '', services: '', consultants: '' });
+
+            const x = { ...sortList, [window]: 'Price (high - low)' };
+            setSortList(x);
+            console.log(sortList);
+
             if (window === 'webinars') {
                 const sortWebminars = [...selectedWebminars].sort((a, b) => (a.price < b.price ? 1 : -1));
                 console.log(sortWebminars.map((e) => e.price));
@@ -164,6 +181,12 @@ const useWebminars = (window) => {
 
     const sortByDate = (sort) => {
         if (sort === 'oldest') {
+            setSortList({ ...sortList, webinars: '', services: '', consultants: '' });
+
+            const x = { ...sortList, [window]: 'Date (oldest first)' };
+            setSortList(x);
+            console.log(sortList);
+
             const sortWebminars = [...selectedWebminars].sort((a, b) =>
                 a.startDate.replace(/[^\d]/g, '') > b.startDate.replace(/[^\d]/g, '') ? 1 : -1,
             );
@@ -171,6 +194,12 @@ const useWebminars = (window) => {
             setSelectedWebminars(sortWebminars);
             localStorage.setItem('webminarList', JSON.stringify(sortWebminars));
         } else if (sort === 'latest') {
+            setSortList({ ...sortList, webinars: '', services: '', consultants: '' });
+
+            const x = { ...sortList, [window]: 'Date (latest first)' };
+            setSortList(x);
+            console.log(sortList);
+
             const sortWebminars = [...selectedWebminars].sort((a, b) =>
                 a.startDate.replace(/[^\d]/g, '') < b.startDate.replace(/[^\d]/g, '') ? 1 : -1,
             );
@@ -182,6 +211,11 @@ const useWebminars = (window) => {
 
     const sortByTitle = (sort) => {
         if (sort === 'atoz') {
+            setSortList({ ...sortList, webinars: '', services: '', consultants: '' });
+            const x = { ...sortList, [window]: 'Title (A-Z)' };
+            setSortList(x);
+            console.log(sortList);
+
             if (window === 'webinars') {
                 const sortWebminars = [...selectedWebminars].sort((a, b) =>
                     a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1,
@@ -198,6 +232,12 @@ const useWebminars = (window) => {
                 localStorage.setItem('servicesList', JSON.stringify(sortWebminars));
             }
         } else if (sort === 'ztoa') {
+            setSortList({ ...sortList, webinars: '', services: '', consultants: '' });
+
+            const x = { ...sortList, [window]: 'Title (Z-A)' };
+            setSortList(x);
+            console.log(sortList);
+
             if (window === 'webinars') {
                 const sortWebminars = [...selectedWebminars].sort((a, b) =>
                     a.title.toLowerCase() < b.title.toLowerCase() ? 1 : -1,
@@ -257,6 +297,7 @@ const useWebminars = (window) => {
         keyWords,
         select,
         display,
+        sortList,
         showDropDown,
         resetSelection,
         colorOnSelect,
