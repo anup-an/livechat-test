@@ -6,11 +6,11 @@ const WebminarFilter = ({ window }) => {
 
     return (
         <div className="flex flex-col text-xs w-full">
-            <div className="relative order rounded bg-gray-100 p-1 flex flex-row justify-between items-center space-x-4 w-full">
+            <div className="relative border p-2 rounded bg-gray-100 flex flex-row justify-between items-center space-x-4 w-full">
                 <div className="text-gray-500">Sort</div>
                 <button type="button" onClick={showDropDown} className="focus:outline-none">
                     <svg
-                        className="w-5 h-5 text-gray-500"
+                        className="w-4 h-4 text-gray-500"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         stroke="currentColor"

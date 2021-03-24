@@ -67,7 +67,7 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, window }) => {
                     </svg>
                 </button>
             </div>
-            <div className={`border-l-2 border-blue-800 flex flex-row items-start space-x-6 w-full h-full`}>
+            <div className={`border-l-2 border-blue-800 flex flex-row items-start justify-around space-x-4`}>
                 <div className="border rounded shadow-lg flex flex-col items-center ml-2 w-1/4 h-full">
                     <div className="flex justify-center items-center border-b w-full h-full">
                         <div className="text-xs p-1">{new Date(webminar.startDate).toString().slice(4, 10)}</div>
@@ -95,9 +95,9 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, window }) => {
                     )}
                 </div>
 
-                <div className="border rounded shadow-lg p-2 w-full flex flex-col justify-between items-start">
+                <div className="border rounded shadow-lg p-2 w-full flex flex-col justify-around items-start">
                     <div>
-                        <div className="w-64 truncate text-xs">
+                        <div className="w-56 truncate text-xs">
                             <span>Title: {webminar.title}</span>
                         </div>
                         <div className="text-xs">

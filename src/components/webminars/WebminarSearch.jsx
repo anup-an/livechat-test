@@ -32,10 +32,63 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
     };
 
     return (
-        <div>
-            <header className="fixed top-0 right-0 left-0 w-full flex flex-col bg-gradient-to-r from-blue-400 to-blue-900">
-                <div className="flex flex-col space-y-1">
-                    <div className="flex flex-row items-start justify-between">
+        <div className="h-screen">
+            <header className="fixed h-1/5 top-0 right-0 left-0 w-full flex flex-col bg-gradient-to-r from-blue-400 to-blue-900 border-b rounded-lg shadow-lg">
+                <div className="relative">
+                    <span className="flex justify-end">
+                        <button
+                            className="border rounded shadow bg-white hover:bg-red-500"
+                            onClick={closeModal}
+                            type="button"
+                        >
+                            <svg
+                                className="w-4 h-4 text-red-500 hover:text-white"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                        </button>
+                    </span>
+                    {sortList[window] !== '' ? (
+                        <div className="flex justify-end mx-2 ">
+                            <span className="absolute z-10 mt-2 flex flex-row justify-end space-x-1">
+                                <button className="focus:outline-none">
+                                    <span className="bg-white border rounded-full flex items-center justify-center">
+                                        <svg
+                                            className="w-3 h-3 text-red-500"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M6 18L18 6M6 6l12 12"
+                                            />
+                                        </svg>
+                                    </span>
+                                </button>
+
+                                <span className="p-1 border text-xs rounded shadow text-red-500 bg-white">
+                                    Sort = '{sortList[window]}'
+                                </span>
+                            </span>
+                        </div>
+                    ) : (
+                        ''
+                    )}
+
+                    <div className="flex flex-row items-end justify-around mx-2 space-x-4">
                         <div className="border rounded text-center text-xs bg-gray-100 flex flex-col items-center text-white">
                             <button
                                 className={`border-b ${
@@ -69,117 +122,76 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
                                 }}
                             >
                                 Consultants
-                            </button>{' '}
+                            </button>
                         </div>
-                        <div className="flex flex-col space-y-2">
-                            <div onClick={changeWidth} className="flex flex-row justify-between space-x-2">
-                                <form id="searchForm" onSubmit={searchWebminars}>
-                                    <label htmlFor="search" className="flex flex-row items-center">
-                                        <button
-                                            onClick={(event) => searchWebminars(event, window)}
-                                            className="absolute text-gray-500 focus:outline-none hover:text-white hover:text-blue-800 px-2"
-                                        >
-                                            <svg
-                                                className="w-5 h-5"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth="2"
-                                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                                />
-                                            </svg>
-                                        </button>
-                                        <input
-                                            className={`px-10 py-1 border rounded bg-gray-100 text-xs focus:outline-none`}
-                                            id="search"
-                                            name={window}
-                                            ref={searchInput}
-                                            placeholder="Search"
-                                        ></input>
-                                    </label>
-                                </form>
-                                <span>
-                                    <button
-                                        className="border rounded shadow border-red-500 hover:bg-red-500"
-                                        onClick={closeModal}
-                                        type="button"
+                        <form id="searchForm" onSubmit={searchWebminars}>
+                            <label htmlFor="search" className="flex flex-row items-center ">
+                                <button
+                                    onClick={(event) => searchWebminars(event, window)}
+                                    className="absolute text-gray-500 focus:outline-none hover:text-white hover:text-blue-800 px-2"
+                                >
+                                    <svg
+                                        className="w-5 h-5"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
                                     >
-                                        <svg
-                                            className="w-4 h-4 text-red-500 hover:text-white"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M6 18L18 6M6 6l12 12"
-                                            />
-                                        </svg>
-                                    </button>
-                                </span>
-                            </div>
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                        />
+                                    </svg>
+                                </button>
+                                <input
+                                    className={`px-10 border p-2 w-full rounded bg-gray-100 text-xs focus:outline-none`}
+                                    id="search"
+                                    name={window}
+                                    ref={searchInput}
+                                    placeholder="Search"
+                                ></input>
+                            </label>
+                        </form>
 
-                            <div className="flex flex-row justify-end space-x-2">
-                                <div className="flex flex-row">
-                                    <button>
-                                        <svg
-                                            className="w-3 h-3 text-red-500"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M6 18L18 6M6 6l12 12"
-                                            />
-                                        </svg>
-                                    </button>
-                                    <span className="p-1 border text-xs rounded shadow border-red-500 text-red-500 bg-white">
-                                        Sort = '{sortList[window]}'
-                                    </span>
-                                </div>
-                                <span>
-                                    <WebminarFilter window={window} />
-                                </span>
-                            </div>
-                        </div>
+                        <span>
+                            <WebminarFilter window={window} />
+                        </span>
                     </div>
                 </div>
-                <div className="flex items-center justify-center mx-2">
-                    <span className="p-1 border text-xs rounded shadow border-red-500 text-red-500 truncate overflow-clip bg-white">
-                        Search = '{keyWords[window]}'
-                    </span>
-                    <button className="bg-white border rounded-full flex items-center text-center">
-                        <svg
-                            className="w-3 h-3 text-red-500"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"
-                            />
-                        </svg>
-                    </button>
-                </div>
+                {keyWords[window] ? (
+                    <div className="flex flex-row space-x-1 items-center justify-center m-2">
+                        <div className="flex flex-row space-x-1">
+                            <span className="p-1 border text-xs rounded shadow text-red-500 truncate overflow-clip bg-white">
+                                Search = '{keyWords[window]}'
+                            </span>
+                            <button className="focus:outline-none">
+                                <span className="bg-white border rounded-full flex items-center justify-center">
+                                    <svg
+                                        className="w-3 h-3 text-red-500"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12"
+                                        />
+                                    </svg>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                ) : (
+                    ''
+                )}
             </header>
 
-            <main className="mt-24 mb-20">
+            <main className="mt-32 mb-20">
                 <div className="flex flex-col space-y-1 mt-4">
                     {selectedWebminars.map((webminar) =>
                         webminar.isDisplayed === true ? (
@@ -227,7 +239,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
                     )}
                 </div>
             </main>
-            <footer className="fixed border shadow left-0 right-0 bottom-0 w-full h-24 bg-white flex flex-row justify-between items-center p-2">
+            <footer className="fixed border-t rounded-lg shadow left-0 right-0 bottom-0 w-full h-24 bg-white flex flex-row justify-between items-center p-2">
                 <button
                     type="button"
                     className={`border ${

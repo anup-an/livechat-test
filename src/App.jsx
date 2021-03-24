@@ -276,7 +276,7 @@ const App = ({ accessToken }) => {
                     isOpen={isOpen}
                     onRequestClose={closeModal}
                     overlayClassName="fixed inset-0 bg-white bg-opacity-75 flex justify-center"
-                    className="relative bg-white overflow-y-auto focus:outline-none p-2 w-full m-1"
+                    className="relative bg-white overflow-y-auto focus:outline-none w-screen"
                 >
                     {modalContent}
                 </Modal>
