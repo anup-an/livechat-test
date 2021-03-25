@@ -47,12 +47,10 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, window }) => {
                         toArray(webminar);
                         sendSelectedWebminars(arr, chatId, accessToken);
                     }}
-                    className={`w-5 h-5 hover:bg-blue-800 text-blue-400 hover:text-white border rounded shadow flex items-center justify-center focus:outline-none`}
+                    className={`w-5 h-5 bg-blue-400 hover:bg-blue-900 text-white border rounded shadow flex items-center justify-center focus:outline-none`}
                 >
                     <svg
-                        className={`w-5 h-5 ${
-                            select.id === webminar.id && select.isColored === true ? 'text-white' : ''
-                        }`}
+                        className={`w-5 h-5 text-white`}
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         stroke="currentColor"
@@ -68,8 +66,8 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, window }) => {
                 </button>
             </div>
             <div className={`border-l-2 border-blue-800 flex flex-row items-start justify-around space-x-4`}>
-                <div className="border rounded shadow-lg flex flex-col items-center ml-2 w-1/4 h-full">
-                    <div className="flex justify-center items-center border-b w-full h-full">
+                <div className="border rounded shadow-lg flex flex-col items-center ml-2 w-2/5 ">
+                    <div className="flex justify-center items-center border-b w-full ">
                         <div className="text-xs p-1">{new Date(webminar.startDate).toString().slice(4, 10)}</div>
                     </div>
                     {Number(webminar.price) === 0 ? (
@@ -109,7 +107,7 @@ const WebminarDisplay = ({ webminar, accessToken, chatId, window }) => {
                         </div>
                     </div>
                     <button
-                        className={`w-5 h-5 hover:bg-blue-800 text-blue-400 hover:text-white border rounded shadow flex items-center justify-center focus:outline-none ${
+                        className={`w-5 h-5 hover:bg-blue-800 text-white hover:text-white border bg-blue-400 rounded shadow flex items-center justify-center transition duration-500 ease-in-out transform hover:translate-y-0 hover:scale-102 focus:outline-none ${
                             details ? 'hidden' : 'block'
                         }`}
                         type="button"
