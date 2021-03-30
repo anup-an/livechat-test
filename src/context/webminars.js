@@ -13,6 +13,7 @@ const initialState = {
         consultants: '',
         services: '',
     },
+    setSortList: () => {},
     showDropDown: () => {},
     resetSelection: () => {},
     selectWebminar: () => {},

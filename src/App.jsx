@@ -47,6 +47,7 @@ const App = ({ accessToken }) => {
             .then((widget) => {
                 // condition that is emitted when an agent opens a conversation within Chats
                 widget.on('customer_profile', (profile) => {
+                    console.log(profile.chat);
                     // sets chat_id
                     setChatId(profile.chat.chat_id);
                 });

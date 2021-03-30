@@ -298,6 +298,7 @@ const useWebminars = (window) => {
         select,
         display,
         sortList,
+        setSortList,
         showDropDown,
         resetSelection,
         colorOnSelect,

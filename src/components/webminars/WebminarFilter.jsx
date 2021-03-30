@@ -1,18 +1,41 @@
-import React, { useContext } from 'react';
+/* eslint-disable no-unused-expressions */
+import React, { useContext, useState } from 'react';
 import WebminarContext from '../../context/webminars';
-import { Slide } from 'react-awesome-reveal';
 
 const WebminarFilter = ({ window }) => {
-    const { sortByPrice, sortByTitle, sortByDate, display, showDropDown, sortList } = useContext(WebminarContext);
+    const { sortByPrice, sortByTitle, sortByDate, display, showDropDown, sortList, setSortList } = useContext(
+        WebminarContext,
+    );
+    const [menuDisplay, setMenuDisplay] = useState({ price: false, date: false, title: false });
+
+    const showOptions = (menu) => {
+        menu === 'price' ? setMenuDisplay({ ...menuDisplay, price: true, date: false, title: false }) : '';
+        menu === 'date' ? setMenuDisplay({ ...menuDisplay, price: false, date: true, title: false }) : '';
+        menu === 'title' ? setMenuDisplay({ ...menuDisplay, price: false, date: false, title: true }) : '';
+    };
+
+    const hideOptions = (menu) => {
+        menu === 'price' ? setMenuDisplay({ ...menuDisplay, price: false }) : '';
+        menu === 'date' ? setMenuDisplay({ ...menuDisplay, date: false }) : '';
+        menu === 'title' ? setMenuDisplay({ ...menuDisplay, title: false }) : '';
+    };
+
+    console.log(menuDisplay);
 
     return (
-        <div className="flex flex-col text-xs w-full">
-            <div className="relative border p-2 rounded bg-gray-100 flex flex-row justify-between items-center space-x-4 w-full">
+        <div className="text-xs">
+            <div className="relative border p-2 rounded bg-gray-100 flex flex-row justify-between items-center space-x-4">
                 <div className="text-gray-500">
                     {sortList[window] ? (
-                        <div className="flex justify-end mx-2 ">
+                        <div className="flex justify-center">
                             <span className="flex flex-row justify-center space-x-1">
-                                <button className="focus:outline-none">
+                                <span className="border text-xs rounded shadow text-red-500 bg-white">
+                                    {sortList[window]}
+                                </span>
+                                <button
+                                    className="focus:outline-none"
+                                    onClick={() => setSortList({ ...sortList, [window]: '' })}
+                                >
                                     <span className="bg-white border rounded-full flex items-center justify-center">
                                         <svg
                                             className="w-3 h-3 text-red-500"
@@ -30,17 +53,13 @@ const WebminarFilter = ({ window }) => {
                                         </svg>
                                     </span>
                                 </button>
-
-                                <span className="p-1 border text-xs rounded shadow text-red-500 bg-white">
-                                    {sortList[window]}
-                                </span>
                             </span>
                         </div>
                     ) : (
                         'Sort'
                     )}{' '}
                 </div>
-                <button type="button" onClick={showDropDown} className="focus:outline-none">
+                <button type="button" onClick={showDropDown} className="relative focus:outline-none">
                     <svg
                         className="w-4 h-4 text-gray-500"
                         xmlns="http://www.w3.org/2000/svg"
@@ -57,165 +76,30 @@ const WebminarFilter = ({ window }) => {
                     </svg>
                 </button>
             </div>
-            <div
-                className={`absolute z-10 -mt-2 text-red-500 w-full ${
-                    sortList[window] !== '' ? 'block' : 'hidden'
-                } text-center`}
-            >
-                <div>Sort</div>
-            </div>
-            <div>
-                <div
-                    key={display}
-                    className={`absolute right-0 bg-white border rounded shadow ${display ? 'block' : 'hidden'}`}
-                >
-                    <div className="border-b flex flex-row p-2 space-x-2 items-center">
-                        <div>Price</div>
-                        <button
-                            type="button"
-                            onClick={() => sortByPrice('low')}
-                            className={`text-center border rounded shadow-lg ${
-                                sortList[window] === 'Price (low to high)' ? 'bg-blue-800 text-white' : ''
-                            } p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none`}
-                        >
-                            <svg
-                                className="h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
-                                />
-                            </svg>
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => sortByPrice('high')}
-                            className={`text-center border rounded shadow-lg ${
-                                sortList[window] === 'Price (high to low)' ? 'bg-blue-800 text-white' : ''
-                            } p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none`}
-                        >
-                            <svg
-                                className="h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-
-                    {window === 'webinars' ? (
-                        <div className="p-2 border-b flex flex-row space-x-2 items-center">
-                            <div>Date</div>
-                            <button
-                                type="button"
-                                onClick={() => sortByDate('oldest')}
-                                className={`text-center border rounded shadow-lg ${
-                                    sortList[window] === 'Date (oldest first)' ? 'bg-blue-800 text-white' : ''
-                                } p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none`}
-                            >
-                                <svg
-                                    className="h-5 w-5"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
-                                    />
-                                </svg>
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => sortByDate('latest')}
-                                className={`text-center border rounded shadow-lg ${
-                                    sortList[window] === 'Date (latest first)' ? 'bg-blue-800 text-white' : ''
-                                } p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none`}
-                            >
-                                <svg
-                                    className="h-5 w-5"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-                    ) : (
-                        ''
-                    )}
-                    <div className="p-2 border-b flex flex-row space-x-2 items-center">
-                        <div>Title</div>
-                        <button
-                            type="button"
-                            onClick={() => sortByTitle('atoz')}
-                            className={`text-center border rounded shadow-lg ${
-                                sortList[window] === 'Title (A-Z)' ? 'bg-blue-800 text-white' : ''
-                            } p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none`}
-                        >
-                            <svg
-                                className="h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
-                                />
-                            </svg>
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => sortByTitle('ztoa')}
-                            className={`text-center border rounded shadow-lg ${
-                                sortList[window] === 'Title (Z-A)' ? 'bg-blue-800 text-white' : ''
-                            } p-1 bg-white hover:bg-blue-800 hover:text-white w-full focus:outline-none`}
-                        >
-                            <svg
-                                className="h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+            <div className="absolute w-1/2 bg-white">
+                <ul className="flex flex-col">
+                    <li className="w-full">
+                        <button className="bg-white p-2 right-0 border w-full">Price</button>
+                        <ul>
+                            <li className="bg-white p-2 border">Low - high</li>
+                            <li className="bg-white p-2 border">High - low</li>
+                        </ul>
+                    </li>
+                    <li className="w-full">
+                        <button className="bg-white p-2 right-0 border w-full">Date</button>
+                        <ul>
+                            <li className="bg-white p-2 border">Old - new</li>
+                            <li className="bg-white p-2 border">New - old</li>
+                        </ul>
+                    </li>
+                    <li className="w-full">
+                        <button className="bg-white p-2 right-0 border w-full">Title</button>
+                        <ul>
+                            <li className="bg-white p-2 border">A - Z</li>
+                            <li className="bg-white p-2 border">Z - A</li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     );
