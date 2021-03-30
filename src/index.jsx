@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { config } from '../src/utils/config';
 import { accountsSdk } from '@livechat/accounts-sdk';
+
 import Loader from '../src/ui/Loader';
 
 const AppAuth = () => {

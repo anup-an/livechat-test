@@ -67,7 +67,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
                     </button>
                 </span>
 
-                <div className="relative">
+                <div className="">
                     <div className="flex flex-row items-start justify-between mx-2">
                         <form id="searchForm" onSubmit={searchWebminars}>
                             <label htmlFor="search" className="flex flex-row items-center ">
@@ -312,8 +312,8 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
                     </div>
                 </div>
                 {keyWords[window] ? (
-                    <div className="flex flex-row space-x-1 items-center justify-center m-2">
-                        <div className="flex flex-row space-x-1">
+                    <div className="relative flex flex-row space-x-1 items-center justify-start">
+                        <div className="absolute flex flex-row space-x-1 mx-2">
                             <span className="p-1 border text-xs rounded shadow text-red-500 truncate overflow-clip bg-white">
                                 Search = '{keyWords[window]}'
                             </span>
@@ -344,7 +344,7 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
 
             <Slide right cascade>
                 <main className="mt-32" key={window}>
-                    <div className="flex flex-col space-y-1 mt-4 key={window}">
+                    <div className="flex flex-col key={window}">
                         {selectedWebminars.map((webminar) =>
                             webminar.isDisplayed === true ? (
                                 <div key={webminar.id}>
