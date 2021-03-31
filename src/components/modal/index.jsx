@@ -6,7 +6,7 @@ import Body from '../body';
 import Footer from '../footer';
 import { Slide } from 'react-awesome-reveal';
 
-const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) => {
+const Modals = ({ closeModal, accessToken, chatId, window, openList }) => {
     return (
         <div className="h-screen">
             <Header closeModal={closeModal} window={window} />
@@ -19,4 +19,4 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
     );
 };
 
-export default WebminarSearch;
+export default Modals;

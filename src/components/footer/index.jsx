@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import WebminarToSend from './WebminarsToSend';
+import WebminarToSend from './sendList';
 import WebminarContext from '../../context/webminars';
 import { sendSelectedWebminars } from '../../utils/config';
 
