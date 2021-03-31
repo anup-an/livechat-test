@@ -57,7 +57,7 @@ const App = ({ accessToken }) => {
 
     useEffect(() => {
         axios
-            .get(` https://${process.env.REACT_APP_MEETEO_API_PATH}/thirdParty/v1/list_webinars?app_id=678901`)
+            .get(` https://api-test.meeteo.io/thirdParty/v1/list_webinars?app_id=678901`)
             .then((response) => {
                 setWebminarList(response.data.data.data);
                 localStorage.setItem(
@@ -74,7 +74,7 @@ const App = ({ accessToken }) => {
 
     useEffect(() => {
         axios
-            .get(` https://${process.env.REACT_APP_MEETEO_API_PATH}/thirdParty/v1/list_services?app_id=678901`)
+            .get(` https://api-test.meeteo.io/thirdParty/v1/list_services?app_id=678901`)
             .then((response) => {
                 setServicesList(response.data.data.data);
                 localStorage.setItem(
@@ -91,7 +91,7 @@ const App = ({ accessToken }) => {
 
     useEffect(() => {
         axios
-            .get(` https://${process.env.REACT_APP_MEETEO_API_PATH}/thirdParty/v1/list_consultants?app_id=678901`)
+            .get(` https://api-test.meeteo.io/thirdParty/v1/list_consultants?app_id=678901`)
             .then((response) => {
                 console.log(response.data.data.data);
                 setConsultantsList(response.data.data.data);
@@ -130,20 +130,6 @@ const App = ({ accessToken }) => {
                     type="button"
                     className="flex flex-row items-center space-x-4 w-full p-4 border rounded shadow bg-white focus:outline-none transition duration-500 ease-in-out transform hover:-translate-y-0 hover:scale-105"
                 >
-                    <svg
-                        className="h-16 w-16 text-blue-800"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                        />
-                    </svg>
                     <div className="flex flex-col content-start space-y-2">
                         <div className="font-bold">Upcoming Webinars</div>
                         <div className="text-xs">Send upcoming webinars to customers</div>

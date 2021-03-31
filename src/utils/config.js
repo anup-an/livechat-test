@@ -14,7 +14,7 @@ export const config = {
 export const sendSelectedWebminars = (webminars, chatId, accessToken, window) => {
     let elementsArr;
     window === 'webminars'
-        ? (elementsArr = webminars.map((webminar) => ({
+        ? webminars.map((webminar) => ({
               title: `${webminar.title}`,
               subtitle: `${formatCurrency(Number(webminar.price))}`,
               image: {
@@ -33,7 +33,7 @@ export const sendSelectedWebminars = (webminars, chatId, accessToken, window) =>
                       user_ids: [],
                   },
               ],
-          })))
+          }))
         : webminars.map((webminar) => ({
               title: `${webminar.title}`,
               subtitle: `${formatCurrency(Number(webminar.price))}`,

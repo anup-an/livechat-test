@@ -169,21 +169,21 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
                     <div className={`absolute text-xs right-0 w-1/2 flex flex-row mx-2`}>
                         <ul className="right-1/4 w-1/2">
                             <ul className={`relative ${menuDisplay.price && display ? 'visible' : 'invisible'}`}>
-                                <li className="bg-white p-2 border rounded hover:bg-blue-800 hover:text-white">
+                                <li className="bg-white p-2 border bg-gray-200 hover:bg-blue-800">
                                     <button
                                         onClick={() => sortByPrice('low')}
                                         className={`${
-                                            sortList[window] === 'Price (low to high)' ? 'bg-blue-800 text-white' : ''
+                                            sortList[window] === 'Price (low to high)' ? 'text-white' : ''
                                         } w-full h-full text-center`}
                                     >
                                         Low - high
                                     </button>
                                 </li>
-                                <li class="absolute bg-white p-2 w-full border rounded hover:bg-blue-800 hover:text-white">
+                                <li class="absolute bg-white p-2 w-full border bg-gray-200 hover:bg-blue-800 hover:text-white">
                                     <button
                                         onClick={() => sortByPrice('high')}
                                         className={`${
-                                            sortList[window] === 'Price (high to low)' ? 'bg-blue-800 text-white' : ''
+                                            sortList[window] === 'Price (high to low)' ? 'text-white' : ''
                                         } w-full h-full text-center`}
                                     >
                                         High - low
@@ -191,21 +191,21 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
                                 </li>
                             </ul>
                             <ul className={`${menuDisplay.date && display ? 'visible' : 'invisible'}`}>
-                                <li class="bg-white p-2 border rounded hover:bg-blue-800 hover:text-white">
+                                <li class="bg-white p-2 border bg-gray-200 hover:bg-blue-800 hover:text-white">
                                     <button
                                         onClick={() => sortByDate('oldest')}
                                         className={`${
-                                            sortList[window] === 'Date (oldest first)' ? 'bg-blue-800 text-white' : ''
+                                            sortList[window] === 'Date (oldest first)' ? 'text-white' : ''
                                         } w-full h-full text-center `}
                                     >
                                         Old - new
                                     </button>
                                 </li>
-                                <li class="absolute bg-white p-2 border rounded w-1/2 hover:bg-blue-800 hover:text-white">
+                                <li class="absolute bg-white p-2 border w-1/2 bg-gray-200 hover:bg-blue-800 hover:text-white">
                                     <button
                                         onClick={() => sortByDate('latest')}
                                         className={`${
-                                            sortList[window] === 'Date (latest first)' ? 'bg-blue-800 text-white' : ''
+                                            sortList[window] === 'Date (latest first)' ? 'text-white' : ''
                                         } w-full h-full text-center`}
                                     >
                                         Old - new
@@ -213,21 +213,21 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
                                 </li>
                             </ul>
                             <ul className={`relative ${menuDisplay.title && display ? 'visible' : 'invisible'}`}>
-                                <li class="bg-white p-2 border rounded hover:bg-blue-800 hover:text-white">
+                                <li class="bg-white p-2 border bg-gray-200 hover:bg-blue-800 hover:text-white">
                                     <button
                                         onClick={() => sortByTitle('atoz')}
                                         className={`${
-                                            sortList[window] === 'Title (A-Z)' ? 'bg-blue-800 text-white' : ''
+                                            sortList[window] === 'Title (A-Z)' ? 'text-white' : ''
                                         } w-full h-full text-center`}
                                     >
                                         A - Z
                                     </button>
                                 </li>
-                                <li class="bg-white p-2 border rounded hover:bg-blue-800 hover:text-white">
+                                <li class="bg-white p-2 border bg-gray-200 hover:bg-blue-800 hover:text-white">
                                     <button
                                         onClick={() => sortByTitle('ztoa')}
                                         className={`${
-                                            sortList[window] === 'Title (A-Z)' ? 'bg-blue-800 text-white' : ''
+                                            sortList[window] === 'Title (A-Z)' ? 'text-white' : ''
                                         } w-full h-full text-center`}
                                     >
                                         Z - A
@@ -236,10 +236,12 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
                             </ul>
                         </ul>
                         <ul class={`flex flex-col w-1/2 right-0 ${display ? 'block' : 'hidden'}`}>
-                            <li className=" flex flex-row justify-around">
+                            <li>
                                 <div
                                     onMouseEnter={() => showOptions('price')}
-                                    className={`bg-white p-2 border w-full rounded flex flex-row justify-around`}
+                                    className={`bg-white p-2 border w-full flex flex-row justify-around ${
+                                        menuDisplay.price ? 'bg-gray-200' : ''
+                                    }`}
                                 >
                                     <svg
                                         className={`${
@@ -263,7 +265,9 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
                             <li>
                                 <div
                                     onMouseEnter={() => showOptions('date')}
-                                    className={`bg-white p-2 border w-full rounded flex flex-row justify-around`}
+                                    className={`bg-white p-2 border w-full flex flex-row justify-around ${
+                                        menuDisplay.date ? 'bg-gray-200' : ''
+                                    }`}
                                 >
                                     <svg
                                         className={`${
@@ -287,7 +291,9 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
                             <li>
                                 <div
                                     onMouseEnter={() => showOptions('title')}
-                                    className={`relative bg-white p-2 border w-full rounded flex flex-row justify-around`}
+                                    className={`relative bg-white p-2 border w-full flex flex-row justify-around ${
+                                        menuDisplay.title ? 'bg-gray-200' : ''
+                                    }`}
                                 >
                                     <svg
                                         className={`${
@@ -343,8 +349,8 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
             </header>
 
             <Slide right cascade>
-                <main className="mt-32" key={window}>
-                    <div className="flex flex-col key={window}">
+                <main className="mt-32 mb-20 flex items-center justify-center" key={window}>
+                    <div className="flex flex-col key={window} space-y-4">
                         {selectedWebminars.map((webminar) =>
                             webminar.isDisplayed === true ? (
                                 <div key={webminar.id}>
@@ -383,7 +389,6 @@ const WebminarSearch = ({ closeModal, accessToken, chatId, window, openList }) =
                                             ''
                                         )}
                                     </div>
-                                    <div className="border bg-gray-500 mt-2 mb-4"></div>
                                 </div>
                             ) : (
                                 ''
