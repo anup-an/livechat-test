@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useContext } from 'react';
-import WebminarContext from '../../context/WebminarContext';
+import WebminarContext from '../../context/webminars';
 import { Zoom } from 'react-awesome-reveal';
 
 const sendList = ({ webminar, deleteWebminar, window }) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { sendSelectedWebminars } from './utils/config';
+import { sendSelectedWebminars } from '../../utils/config';
 
 const Frontpage = ({ webminarList, chatId, accessToken, openList }) => {
     return (

@@ -1,5 +1,4 @@
 import { createDetailsWidget } from '@livechat/agent-app-sdk';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import './assets/main.css';
@@ -7,10 +6,11 @@ import Modals from './components/modal';
 import WebminarContext from './context/webminars';
 import useWebminars from './hooks/useWebminars';
 import Frontpage from './components/frontpage';
+import { getMeeteoData } from './utils/config';
 
 Modal.setAppElement('#root');
 
-const App = ({ accessToken }) => {
+const App = ({ authData }) => {
     const [webminarList, setWebminarList] = useState([]);
     const [servicesList, setServicesList] = useState([]);
     const [consultantsList, setConsultantsList] = useState([]);
@@ -34,7 +34,7 @@ const App = ({ accessToken }) => {
         setModalContent(
             <Modals
                 closeModal={closeModal}
-                accessToken={accessToken}
+                accessToken={authData.access_token}
                 chatId={chatId}
                 window={list}
                 openList={openList}
@@ -56,60 +56,17 @@ const App = ({ accessToken }) => {
     }, []);
 
     useEffect(() => {
-        axios
-            .get(` https://api-test.meeteo.io/thirdParty/v1/list_webinars?app_id=678901`)
-            .then((response) => {
-                setWebminarList(response.data.data.data);
-                localStorage.setItem(
-                    'webminarList',
-                    JSON.stringify(
-                        response.data.data.data.map((e) => ({ ...e, isSelected: false, isDisplayed: true })),
-                    ),
-                );
-            })
-            .catch((err) => {
-                return err.response;
-            });
-    }, []);
-
-    useEffect(() => {
-        axios
-            .get(` https://api-test.meeteo.io/thirdParty/v1/list_services?app_id=678901`)
-            .then((response) => {
-                setServicesList(response.data.data.data);
-                localStorage.setItem(
-                    'servicesList',
-                    JSON.stringify(
-                        response.data.data.data.map((e) => ({ ...e, isSelected: false, isDisplayed: true })),
-                    ),
-                );
-            })
-            .catch((err) => {
-                return err.response;
-            });
-    }, []);
-
-    useEffect(() => {
-        axios
-            .get(` https://api-test.meeteo.io/thirdParty/v1/list_consultants?app_id=678901`)
-            .then((response) => {
-                console.log(response.data.data.data);
-                setConsultantsList(response.data.data.data);
-                localStorage.setItem(
-                    'consultantsList',
-                    JSON.stringify(
-                        response.data.data.data.map((e) => ({ ...e, isSelected: false, isDisplayed: true })),
-                    ),
-                );
-            })
-            .catch((err) => {
-                return err.response;
-            });
+        getMeeteoData(setWebminarList, setServicesList, setConsultantsList);
     }, []);
 
     return (
         <div>
-            <Frontpage webminarList={webminarList} chatId={chatId} accessToken={accessToken} openList={openList} />
+            <Frontpage
+                webminarList={webminarList}
+                chatId={chatId}
+                accessToken={authData.access_token}
+                openList={openList}
+            />
 
             <WebminarContext.Provider value={useWebminars(window)}>
                 <Modal

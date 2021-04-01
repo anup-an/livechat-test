@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { config } from '../src/utils/config';
-import { accountsSdk } from '@livechat/accounts-sdk';
+import useAuth from './hooks/useAuth.js';
 
 import Loader from '../src/ui/Loader';
 
 const AppAuth = () => {
     /*     const accessToken = useLiveChat(config.client_id, config.account_url);
      */
-    const [accessToken, setAccessToken] = useState(null);
+    const { authData, isLogged, isLogging } = useAuth();
     const [display, setDisplay] = useState(true);
 
-    useEffect(() => {
+    /* useEffect(() => {
         accountsSdk.init({
             client_id: config.client_id,
             response_type: 'token',
@@ -26,7 +25,7 @@ const AppAuth = () => {
             },
         });
         setDisplay(false);
-    }, [setDisplay]);
+    }, [setDisplay]); */
     /* const signIn = () => {
         const instance = new accountsSdk.init({
             client_id: config.client_id,
@@ -53,9 +52,16 @@ const AppAuth = () => {
             ) : (
                 ''
             )} */}
-            {accessToken ? (
+            {isLogging ? (
                 <div>
-                    <App accessToken={accessToken} />
+                    <Loader />
+                </div>
+            ) : (
+                ''
+            )}
+            {isLogged && authData ? (
+                <div>
+                    <App authData={authData} />
                 </div>
             ) : (
                 ''

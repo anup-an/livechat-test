@@ -153,3 +153,45 @@ export const sendSelectedServices = (services, chatId, accessToken) => {
             console.log(error);
         });
 };
+
+export const getMeeteoData = (setWebminarList, setServicesList, setConsultantsList) => {
+    axios
+        .get(` https://api-test.meeteo.io/thirdParty/v1/list_webinars?app_id=678901`)
+        .then((response) => {
+            setWebminarList(response.data.data.data);
+            localStorage.setItem(
+                'webminarList',
+                JSON.stringify(response.data.data.data.map((e) => ({ ...e, isSelected: false, isDisplayed: true }))),
+            );
+        })
+        .catch((err) => {
+            return err.response;
+        });
+
+    axios
+        .get(` https://api-test.meeteo.io/thirdParty/v1/list_services?app_id=678901`)
+        .then((response) => {
+            setServicesList(response.data.data.data);
+            localStorage.setItem(
+                'servicesList',
+                JSON.stringify(response.data.data.data.map((e) => ({ ...e, isSelected: false, isDisplayed: true }))),
+            );
+        })
+        .catch((err) => {
+            return err.response;
+        });
+
+    axios
+        .get(` https://api-test.meeteo.io/thirdParty/v1/list_consultants?app_id=678901`)
+        .then((response) => {
+            console.log(response.data.data.data);
+            setConsultantsList(response.data.data.data);
+            localStorage.setItem(
+                'consultantsList',
+                JSON.stringify(response.data.data.data.map((e) => ({ ...e, isSelected: false, isDisplayed: true }))),
+            );
+        })
+        .catch((err) => {
+            return err.response;
+        });
+};

@@ -2,9 +2,9 @@ import React from 'react';
 
 const Loader = () => {
     return (
-        <div>
+        <div className="text-blue flex flex-row">
             <svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24"></svg>
-            Loading
+            <div>Signing with livechat</div>
         </div>
     );
 };

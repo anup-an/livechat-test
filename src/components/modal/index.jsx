@@ -11,9 +11,7 @@ const Modals = ({ closeModal, accessToken, chatId, window, openList }) => {
         <div className="h-screen">
             <Header closeModal={closeModal} window={window} />
 
-            <Slide right cascade>
-                <Body accessToken={accessToken} chatId={chatId} window={window} />
-            </Slide>
+            <Body accessToken={accessToken} chatId={chatId} window={window} />
             <Footer chatId={chatId} accessToken={accessToken} openList={openList} />
         </div>
     );
